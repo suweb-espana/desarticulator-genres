@@ -24,9 +24,9 @@ pip install midiutil
 
 ## 📖 Uso Básico
 
-### Generar un Patrón de Punk Rock
+### Generar un Patrón de Punk Rock Drum
 ```bash
-python3 examples/generate_punk_rock_file.py
+python3 examples/generate_punk_rock_drum_file.py
 ```
 
 Esto genera `PunkRock150bars.mid` listo para importar en Superior Drummer 3.
@@ -107,7 +107,7 @@ desarticulator/
 │   ├── API_REFERENCE.md               # Referencia de API
 │   └── CONTRIBUTING.md                # Guía de contribución
 ├── examples/                          # Ejemplos de uso
-│   └── generate_punk_rock_file.py    # Generador Punk Rock
+│   └── generate_punk_rock_drum_file.py  # Generador Punk Rock Drum
 ├── styles/                            # Módulos de estilos musicales
 │   ├── __init__.py                    # Registro de estilos
 │   ├── punk_rock.py                   # Módulo Punk Rock

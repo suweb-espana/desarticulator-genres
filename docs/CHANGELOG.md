@@ -38,7 +38,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 - **Velocidades**: Rangos 40-100 según instrumento y contexto
 
 ### Archivos Principales
-- `generate_punk_rock_file.py` - Generador Punk Rock
+- `generate_punk_rock_drum_file.py` - Generador Punk Rock Drum
 - `README.md` - Documentación de usuario
 - `TECHNICAL_DOCS.md` - Especificaciones técnicas
 - `styles/` - Directorio para futuros estilos
