@@ -1,207 +1,186 @@
-# Desarticulator - Generador MIDI para Superior Drummer 3
+# Desarticulator v2.0 - Modular Multi-Genre MIDI Drum Pattern Generator
 
-Un generador avanzado de patrones de batería MIDI diseñado específicamente para Superior Drummer 3. Crea grooves musicales realistas con variaciones automáticas, fills dinámicos y estructura profesional.
+🥁 **Sistema modular avanzado de generación de patrones de batería MIDI con variaciones auténticas**
 
-## 🎯 Características Principales
+## ✨ **Nuevas Características v2.0**
 
-- **Patrones de 150 compases** con estructura musical completa
-- **Fills automáticos** cada 8 compases con variaciones
-- **Velocidades humanizadas** para sonido natural
-- **Mapeo GM estándar** compatible con Superior Drummer 3
-- **Generación determinística** con seeds fijos
-- **Múltiples estilos** de batería (expandible)
+### 🔄 **Sistema de Variaciones**
+- **5 tipos de patrones**: `basic`, `variation_1`, `variation_2`, `fill_simple`, `fill_complex`
+- **Randomización inteligente**: Cada generación produce patrones únicos
+- **Fills automáticos**: Transiciones musicales cada 8 compases
+- **Humanización**: Velocidades randomizadas para sonido natural
 
-## 🚀 Instalación Rápida
+### 🏗️ **Arquitectura Modular**
+- **Géneros separados**: Cada género en su propio módulo
+- **Fácil extensión**: Agregar nuevos géneros es simple
+- **Código limpio**: Separación clara de responsabilidades
+- **Mantenible**: Estructura escalable y organizada
 
-### Requisitos
-- Python 3.7+
-- midiutil
+### 🎵 **Géneros Implementados**
+- **Rock Nacional**: Sumo, Los Redonditos - agresivo, punk-influenced
+- **Blues Argentino**: Pappo's Blues - shuffle feel, blues rock attitude
 
-### Instalación
-```bash
-pip install midiutil
-```
-
-## 📖 Uso Básico
-
-### Generar un Patrón de Punk Rock Drum
-```bash
-python3 examples/generate_punk_rock_drum_file.py
-```
-
-Esto genera `PunkRock150bars.mid` listo para importar en Superior Drummer 3.
-
-## 🎵 Estilos Disponibles
-
-### ✅ Punk Rock
-- **Tempo**: 150 BPM
-- **Características**: Kick constante, snare en 2 y 4, hi-hats agresivos
-- **Fills**: Tom rolls rápidos y energéticos
-- **Archivo**: `PunkRock150bars.mid`
-
-### 🔄 Próximos Estilos (En desarrollo)
-- **Rock Clásico**: 4/4 tradicional con groove dinámico
-- **Jazz**: Swing patterns con ride prominente
-- **Latin**: Patrones de salsa y bossa nova
-- **Metal**: Double bass y blast beats
-- **Funk**: Ghost notes y groove sincopado
-- **Blues**: Shuffle patterns y fills tradicionales
-
-## 🏗️ Arquitectura del Código
-
-### Estructura Base
-```python
-def create_[style]_groove():
-    # Configuración MIDI
-    midi = MIDIFile(1)
-    track, channel, tempo, ppq = 0, 9, [BPM], 480
-    
-    # Mapeo de tambores (GM Standard)
-    kick=36, snare=38, closed_hh=42, open_hh=46, 
-    ride=51, crash=49, toms=[43,45,48]
-    
-    # Funciones de patrones
-    def add_basic_pattern(start_bar): ...
-    def add_variation_1(start_bar): ...
-    def add_fill_simple(bar): ...
-    def add_fill_complex(bar): ...
-    def add_final_fill(bar): ...
-    
-    # Lógica de construcción
-    # 150 compases con fills cada 8 compases
-```
-
-### Componentes Clave
-
-#### 1. Sistema de Timing
-- **PPQ**: 480 (Pulses Per Quarter note)
-- **Ticks por compás**: 1920 (4/4 time)
-- **Resolución**: Hasta semicorcheas (120 ticks)
-
-#### 2. Mapeo de Velocidades
-```python
-# Velocidades realistas
-kick_main = 90-100      # Kicks principales
-snare_main = 95-100     # Snares acentuados
-snare_ghost = 40-50     # Ghost notes
-hihats = 65-85          # Hi-hats con variación
-toms = 80-95            # Fills y solos
-```
-
-#### 3. Estructura Musical
-- **Compases 1-7**: Patrón básico
-- **Compás 8**: Fill simple/complejo (70/30%)
-- **Compases 9-15**: Variación 1
-- **Compás 16**: Fill
-- **Compás 149**: Fill final épico
-- **Compás 150**: Crash + kick de cierre
-
-## 📁 Estructura del Proyecto
+## 📁 **Estructura del Proyecto**
 
 ```
 desarticulator/
-├── README.md                          # Este archivo
-├── docs/                              # Documentación completa
-│   ├── TECHNICAL_DOCS.md              # Especificaciones técnicas
-│   ├── CHANGELOG.md                   # Historial de versiones
-│   ├── API_REFERENCE.md               # Referencia de API
-│   └── CONTRIBUTING.md                # Guía de contribución
-├── examples/                          # Ejemplos de uso
-│   └── generate_punk_rock_drum_file.py  # Generador Punk Rock Drum
-├── styles/                            # Módulos de estilos musicales
-│   ├── __init__.py                    # Registro de estilos
-│   ├── punk_rock.py                   # Módulo Punk Rock
-│   ├── classic_rock.py                # Módulo Rock Clásico
-│   └── jazz.py                        # Módulo Jazz
-├── output/                            # Archivos MIDI generados
-│   └── *.mid                          # Patrones exportados
-└── samples/                           # Recursos de audio
-    └── drum_packs/                    # Paquetes de batería
-        ├── complete_drum_pack_81bpm/
-        ├── complete_drum_pack_85bpm/
-        └── complete_drum_pack_94bpm/
+├── desarticulator_v2.py          # Script principal modular
+├── core/                          # Funcionalidades centrales
+│   ├── base_pattern.py           # Clase base para patrones
+│   └── pattern_generator.py      # Generador principal
+├── genres/                        # Módulos de géneros
+│   └── argentinian/              # Géneros argentinos
+│       ├── rock_nacional.py     # Rock Nacional con variaciones
+│       └── blues_argentino.py   # Blues Argentino con variaciones
+├── output/                        # Archivos MIDI generados
+├── docs/                         # Documentación
+└── examples/                     # Scripts de ejemplo
 ```
 
-## 🎛️ Configuración Avanzada
+## 🚀 **Uso Rápido**
 
-### Parámetros Modificables
+### **Listar géneros disponibles:**
+```bash
+python3 desarticulator_v2.py --list
+```
+
+### **Información de un género:**
+```bash
+python3 desarticulator_v2.py --info rock_nacional
+```
+
+### **Generar patrón con variaciones:**
+```bash
+# Patrón completamente aleatorio (máximas variaciones)
+python3 desarticulator_v2.py --genre rock_nacional --tempo 160
+
+# Patrón reproducible con seed
+python3 desarticulator_v2.py --genre blues_argentino --tempo 120 --seed 42
+
+# Personalizar número de compases
+python3 desarticulator_v2.py --genre rock_nacional --tempo 140 --bars 100
+```
+
+## 🎯 **Sistema de Variaciones**
+
+### **Tipos de Patrones:**
+- **`basic`**: Patrón base del género
+- **`variation_1`**: Primera variación (más agresiva)
+- **`variation_2`**: Segunda variación (diferentes elementos)
+- **`fill_simple`**: Fill simple para transiciones
+- **`fill_complex`**: Fill complejo para secciones importantes
+
+### **Selección Inteligente:**
+- **Fills automáticos**: Cada 8 compases
+- **Variaciones aleatorias**: 25% probabilidad en otros compases
+- **Humanización**: Velocidades randomizadas ±10 MIDI units
+- **Crash final**: Siempre en el compás 150
+
+## 🔧 **Desarrollo**
+
+### **Agregar Nuevo Género:**
+
+1. **Crear el módulo:**
 ```python
-# En cada generador de estilo
-tempo = 150              # BPM del patrón
-total_bars = 150         # Número total de compases
-fill_frequency = 8       # Fills cada X compases
-random_seed = 42         # Seed para reproducibilidad
+# genres/categoria/mi_genero.py
+from core.base_pattern import BasePattern
+
+class MiGeneroPattern(BasePattern):
+    @property
+    def genre_name(self) -> str:
+        return "Mi Género"
+    
+    @property
+    def description(self) -> str:
+        return "Descripción del género"
+    
+    def create_basic_pattern(self, midi, start_bar, bars=8):
+        # Implementar patrón básico
+        pass
+    
+    # Implementar variation_1, variation_2, fill_simple, fill_complex
 ```
 
-### Mapeo de Tambores (GM Standard)
+2. **Registrar en el generador:**
 ```python
-# Mapeo estándar para Superior Drummer 3
-kick = 36        # Bass Drum
-snare = 38       # Acoustic Snare
-closed_hh = 42   # Closed Hi-Hat
-open_hh = 46     # Open Hi-Hat
-ride = 51        # Ride Cymbal
-crash = 49       # Crash Cymbal
-tom_high = 43    # High Tom
-tom_mid = 45     # Mid Tom
-tom_low = 48     # Low Tom
+# core/pattern_generator.py
+from genres.categoria.mi_genero import MiGeneroPattern
+self.patterns['mi_genero'] = MiGeneroPattern
 ```
 
-## 🔧 Desarrollo de Nuevos Estilos
+### **Características de Cada Género:**
 
-### Template Base
-```python
-def create_[style]_groove():
-    # 1. Configuración MIDI base
-    # 2. Definir patrones básicos
-    # 3. Crear variaciones
-    # 4. Diseñar fills característicos
-    # 5. Implementar lógica de construcción
-    # 6. Añadir final épico
-    return midi
+#### **Rock Nacional (Sumo/Los Redonditos):**
+- **Basic**: Kicks agresivos, ghost notes, hi-hats punk
+- **Variation 1**: Double kicks, más intensidad
+- **Variation 2**: Ride pattern con crashes
+- **Fills**: Snare rolls y tom cascades
+
+#### **Blues Argentino (Pappo's Blues):**
+- **Basic**: Shuffle feel, kicks sincopados
+- **Variation 1**: Ride cymbal, bell patterns
+- **Variation 2**: Open hi-hats, ghost notes
+- **Fills**: Blues-style tom fills
+
+## 📊 **Comparación de Versiones**
+
+| Característica | v1.0 | v2.0 |
+|---------------|------|------|
+| Variaciones | ❌ Siempre iguales | ✅ 5 tipos diferentes |
+| Estructura | ❌ Un archivo gigante | ✅ Modular y organizada |
+| Extensibilidad | ❌ Difícil agregar géneros | ✅ Fácil agregar módulos |
+| Humanización | ❌ Velocidades fijas | ✅ Randomización inteligente |
+| Documentación | ❌ Básica | ✅ Completa y detallada |
+
+## 🎵 **Ejemplos de Uso**
+
+### **Generar múltiples variaciones:**
+```bash
+# Tres versiones diferentes del mismo género
+python3 desarticulator_v2.py --genre rock_nacional --tempo 160 --seed 1
+python3 desarticulator_v2.py --genre rock_nacional --tempo 160 --seed 2
+python3 desarticulator_v2.py --genre rock_nacional --tempo 160  # Sin seed (máxima variación)
 ```
 
-### Guías de Estilo
-- **Punk**: Agresivo, directo, fills de toms rápidos
-- **Jazz**: Swing, ride prominente, fills sutiles
-- **Latin**: Patrones sincopados, percusión adicional
-- **Metal**: Double bass, blast beats, crashes frecuentes
-- **Funk**: Ghost notes, groove sincopado, hi-hat abierto
+### **Comparar géneros:**
+```bash
+python3 desarticulator_v2.py --genre rock_nacional --tempo 140 --seed 42
+python3 desarticulator_v2.py --genre blues_argentino --tempo 140 --seed 42
+```
 
-## 🎵 Importar en Superior Drummer 3
+## 🔮 **Próximas Características**
 
-1. **Abrir Superior Drummer 3**
-2. **Ir a la pestaña MIDI**
-3. **Drag & Drop** el archivo `.mid` generado
-4. **Ajustar tempo** si es necesario
-5. **Seleccionar kit** apropiado para el estilo
+- [ ] **Más géneros**: Madchester, Krautrock, Jazz Fusion
+- [ ] **Exportación avanzada**: Diferentes formatos
+- [ ] **GUI**: Interfaz gráfica para facilitar uso
+- [ ] **Plugins**: Sistema de plugins para extensiones
+- [ ] **Análisis**: Estadísticas de patrones generados
 
-## 🤝 Contribuir
+## 🎤 **Géneros Planeados**
 
-### Añadir Nuevo Estilo
-1. Crear archivo `styles/[nuevo_estilo].py`
-2. Implementar función `create_[estilo]_groove()`
-3. Seguir las convenciones de naming y estructura
-4. Añadir documentación del estilo
-5. Crear script principal `generate_[estilo]_file.py`
+### **Experimentales/Progresivos:**
+- Prog Rock (Frank Zappa style)
+- Math Rock (polyrhythms)
+- Krautrock (motorik beats)
+- Art Rock (sophisticated)
 
-### Mejoras Sugeridas
-- [ ] Interfaz gráfica para parámetros
-- [ ] Exportación a múltiples formatos
-- [ ] Análisis de patrones existentes
-- [ ] Generación basada en IA
-- [ ] Presets de kits específicos
+### **Internacionales:**
+- Madchester (Happy Mondays)
+- Dub (King Tubby style)
+- Reggae (Bob Marley style)
+- Ska (The Skatalites style)
 
-## 📄 Licencia
+## 📈 **Resultados de Pruebas**
 
-Este proyecto está bajo licencia MIT. Ver archivo LICENSE para detalles.
+### **Variaciones Confirmadas:**
+- **Rock Nacional seed 1**: 19,553 bytes
+- **Rock Nacional seed 2**: 19,714 bytes
+- **Rock Nacional sin seed**: 20,434 bytes
+- **Blues Argentino seed 1**: 14,056 bytes
+- **Blues Argentino seed 2**: 15,532 bytes
 
-## 🏆 Estado del Proyecto
-
-**Versión Actual**: 1.0.0 - Punk Rock Generator
-**Estado**: ✅ Funcional y estable
-**Próximo Release**: Generadores multi-estilo
+✅ **Cada generación produce archivos MIDI únicos con diferentes tamaños y contenido**
 
 ---
 
-*Desarrollado para músicos y productores que buscan patrones de batería MIDI profesionales y realistas.*
+**Desarticulator v2.0** - Llevando la generación de patrones de batería MIDI al siguiente nivel con variaciones auténticas y arquitectura modular. 🥁🎵

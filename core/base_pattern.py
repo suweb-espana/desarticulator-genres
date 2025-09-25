@@ -43,6 +43,10 @@ class BasePattern(ABC):
         self.variation_types = ['basic', 'variation_1', 'variation_2', 'fill_simple', 'fill_complex']
         self.current_variation = 'basic'
         
+        # Song section system
+        self.section_types = ['intro', 'verse', 'chorus', 'bridge', 'outro', 'full_song']
+        self.current_section = 'full_song'
+        
     def setup_randomization(self) -> None:
         """Setup randomization with optional seed."""
         if self.seed is not None:
@@ -106,6 +110,32 @@ class BasePattern(ABC):
         """Create a complex fill for major transitions."""
         pass
     
+    # Song Section Methods
+    @abstractmethod
+    def create_intro_section(self, midi: MIDIFile, start_bar: int, bars: int = 8) -> None:
+        """Create intro section - typically builds up energy."""
+        pass
+    
+    @abstractmethod
+    def create_verse_section(self, midi: MIDIFile, start_bar: int, bars: int = 16) -> None:
+        """Create verse section - steady, supportive groove."""
+        pass
+    
+    @abstractmethod
+    def create_chorus_section(self, midi: MIDIFile, start_bar: int, bars: int = 16) -> None:
+        """Create chorus section - energetic, driving."""
+        pass
+    
+    @abstractmethod
+    def create_bridge_section(self, midi: MIDIFile, start_bar: int, bars: int = 8) -> None:
+        """Create bridge section - different feel, contrast."""
+        pass
+    
+    @abstractmethod
+    def create_outro_section(self, midi: MIDIFile, start_bar: int, bars: int = 8) -> None:
+        """Create outro section - winds down or big ending."""
+        pass
+    
     def generate_pattern(self, bars: int = 150) -> MIDIFile:
         """Generate complete drum pattern with variations."""
         self.setup_randomization()
@@ -138,6 +168,40 @@ class BasePattern(ABC):
         
         # Final crash on last bar
         self.add_note(midi, self.drum_mapping['crash'], bars - 1, 0, 100, 2.0)
+        
+        return midi
+    
+    def generate_section(self, section: str, bars: int = None) -> MIDIFile:
+        """Generate specific song section."""
+        self.setup_randomization()
+        
+        midi = MIDIFile(1)
+        midi.addTempo(self.midi_config['track'], 0, self.tempo)
+        
+        # Default bar counts for each section
+        default_bars = {
+            'intro': 8,
+            'verse': 16,
+            'chorus': 16,
+            'bridge': 8,
+            'outro': 8
+        }
+        
+        if bars is None:
+            bars = default_bars.get(section, 16)
+        
+        if section == 'intro':
+            self.create_intro_section(midi, 0, bars)
+        elif section == 'verse':
+            self.create_verse_section(midi, 0, bars)
+        elif section == 'chorus':
+            self.create_chorus_section(midi, 0, bars)
+        elif section == 'bridge':
+            self.create_bridge_section(midi, 0, bars)
+        elif section == 'outro':
+            self.create_outro_section(midi, 0, bars)
+        else:
+            raise ValueError(f"Unknown section: {section}. Available: {self.section_types[:-1]}")
         
         return midi
     

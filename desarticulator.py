@@ -1,910 +1,169 @@
 #!/usr/bin/env python3
 """
-Desarticulator - Multi-Genre MIDI Drum Pattern Generator (100 Underground Genres)
-Advanced drum pattern generator with 100 underground, avant-garde, and regional musical styles.
+Desarticulator v2.0 - Modular Multi-Genre MIDI Drum Pattern Generator
+Advanced modular drum pattern generator with variation system and authentic genre implementations.
 """
 
-import os
-import random
-import time
 import argparse
-from midiutil import MIDIFile
+import sys
+import os
+from pathlib import Path
 
-class Desarticulator:
-    def __init__(self):
-        self.available_genres = {
-            # Experimental/Progresivo (Estilo Zappa)
-            'prog_rock': 'Prog Rock',
-            'avant_prog': 'Avant-Prog',
-            'jazz_fusion': 'Jazz Fusion',
-            'experimental_rock': 'Experimental Rock',
-            'art_rock': 'Art Rock',
-            'math_rock': 'Math Rock',
-            'krautrock': 'Krautrock',
-            'post_rock': 'Post-Rock',
-            'no_wave': 'No Wave',
-            'avant_garde': 'Avant-Garde',
-            # Blues/Roots (Mejorados)
-            'delta_blues': 'Delta Blues',
-            'chicago_blues': 'Chicago Blues',
-            'electric_blues': 'Electric Blues',
-            'blues_rock': 'Blues Rock',
-            'psychedelic_blues': 'Psychedelic Blues',
-            'blues_fusion': 'Blues Fusion',
-            'roots_blues': 'Roots Blues',
-            'blues_funk': 'Blues Funk',
-            'acid_blues': 'Acid Blues',
-            'blues_experimental': 'Blues Experimental',
-            # Country/Roots (Mejorados)
-            'outlaw_country': 'Outlaw Country',
-            'alt_country': 'Alt-Country',
-            'country_rock': 'Country Rock',
-            'progressive_country': 'Progressive Country',
-            'country_blues': 'Country Blues',
-            'psych_country': 'Psych Country',
-            'country_funk': 'Country Funk',
-            'americana': 'Americana',
-            'country_jazz': 'Country Jazz',
-            'experimental_country': 'Experimental Country',
-            # Dub/Reggae/Ska
-            'dub': 'Dub',
-            'reggae': 'Reggae',
-            'ska': 'Ska',
-            'rocksteady': 'Rocksteady',
-            'dubstep': 'Dubstep',
-            'dub_techno': 'Dub Techno',
-            'dub_reggae': 'Dub Reggae',
-            'ska_punk': 'Ska Punk',
-            'dub_experimental': 'Dub Experimental',
-            'reggae_fusion': 'Reggae Fusion',
-            # Música Uruguaya
-            'candombe': 'Candombe',
-            'murga': 'Murga',
-            'tango': 'Tango',
-            'bossa_nova': 'Bossa Nova',
-            'mpb': 'MPB',
-            'tropicalia': 'Tropicalia',
-            'nueva_cancion': 'Nueva Canción',
-            'folk_latino': 'Folk Latino',
-            'latin_jazz': 'Latin Jazz',
-            'experimental_latino': 'Experimental Latino',
-            # Música Argentina
-            'rock_nacional': 'Rock Nacional',
-            'post_punk_argentino': 'Post-Punk Argentino',
-            'rock_alternativo_argentino': 'Rock Alternativo Argentino',
-            'punk_argentino': 'Punk Argentino',
-            'rock_progresivo_argentino': 'Rock Progresivo Argentino',
-            'rock_experimental_argentino': 'Rock Experimental Argentino',
-            'rock_psicodelico_argentino': 'Rock Psicodélico Argentino',
-            'rock_underground_argentino': 'Rock Underground Argentino',
-            'rock_vanguardista_argentino': 'Rock Vanguardista Argentino',
-            'rock_experimental_latino': 'Rock Experimental Latino',
-            'blues_argentino': 'Blues Argentino',
-            'rock_progresivo_argentino_charly': 'Rock Progresivo Argentino (Charly/Spinetta)',
-            'rock_sinfonico_argentino': 'Rock Sinfónico Argentino',
-            'rock_experimental_argentino_charly': 'Rock Experimental Argentino (Charly/Spinetta)',
-            'rock_vanguardista_argentino_charly': 'Rock Vanguardista Argentino (Charly/Spinetta)',
-            'rock_psicodelico_argentino_charly': 'Rock Psicodélico Argentino (Charly/Spinetta)',
-            'rock_alternativo_argentino_charly': 'Rock Alternativo Argentino (Charly/Spinetta)',
-            'rock_underground_argentino_charly': 'Rock Underground Argentino (Charly/Spinetta)',
-            'rock_experimental_latino_charly': 'Rock Experimental Latino (Charly/Spinetta)',
-            'rock_vanguardista_latino_charly': 'Rock Vanguardista Latino (Charly/Spinetta)',
-            'rock_alternativo_argentino_encargados': 'Rock Alternativo Argentino (Los Encargados)',
-            'rock_experimental_argentino_encargados': 'Rock Experimental Argentino (Los Encargados)',
-            'rock_underground_argentino_encargados': 'Rock Underground Argentino (Los Encargados)',
-            'rock_vanguardista_argentino_encargados': 'Rock Vanguardista Argentino (Los Encargados)',
-            'rock_psicodelico_argentino_encargados': 'Rock Psicodélico Argentino (Los Encargados)',
-            'rock_progresivo_argentino_encargados': 'Rock Progresivo Argentino (Los Encargados)',
-            'rock_sinfonico_argentino_encargados': 'Rock Sinfónico Argentino (Los Encargados)',
-            'rock_experimental_latino_encargados': 'Rock Experimental Latino (Los Encargados)',
-            'rock_vanguardista_latino_encargados': 'Rock Vanguardista Latino (Los Encargados)',
-            'rock_alternativo_latino_encargados': 'Rock Alternativo Latino (Los Encargados)',
-            # David Bowie/Glam Rock
-            'glam_rock': 'Glam Rock',
-            'art_rock_bowie': 'Art Rock (Bowie)',
-            'prog_rock_bowie': 'Prog Rock (Bowie)',
-            'experimental_rock_bowie': 'Experimental Rock (Bowie)',
-            'avant_garde_bowie': 'Avant-Garde (Bowie)',
-            'art_pop': 'Art Pop',
-            'glam_punk': 'Glam Punk',
-            'glam_metal': 'Glam Metal',
-            'glam_funk': 'Glam Funk',
-            'glam_experimental': 'Glam Experimental',
-            # Madchester/Britpop
-            'madchester': 'Madchester',
-            'baggy': 'Baggy',
-            'indie_dance': 'Indie Dance',
-            'acid_house': 'Acid House',
-            'rave': 'Rave',
-            'indie_rock': 'Indie Rock',
-            'alternative_dance': 'Alternative Dance',
-            'indie_pop': 'Indie Pop',
-            'indie_electronic': 'Indie Electronic',
-            'indie_experimental': 'Indie Experimental'
-        }
-        
-        self.midi_config = {
-            'track': 0,
-            'channel': 9,
-            'ppq': 480,
-            'ticks_per_bar': 1920,
-            'ticks_per_beat': 480,
-            'ticks_per_eighth': 240,
-            'ticks_per_sixteenth': 120
-        }
-        
-        self.drum_mapping = {
-            'kick': 36,
-            'snare': 38,
-            'closed_hh': 42,
-            'open_hh': 46,
-            'ride': 51,
-            'crash': 49,
-            'tom_high': 43,
-            'tom_mid': 45,
-            'tom_low': 48
-        }
-    
-    def create_midi_file(self, genre, tempo=150, seed=None, bars=150):
-        """Create MIDI file for specified genre with given parameters."""
-        if seed is None:
-            seed = int(time.time())
-        
-        random.seed(seed)
-        
-        midi = MIDIFile(1)
-        midi.addTempo(self.midi_config['track'], 0, tempo)
-        
-        # Genre dispatch - all 100 genres
-        genre_methods = {
-            # Experimental/Progresivo (Estilo Zappa)
-            'prog_rock': self._create_prog_rock_groove,
-            'avant_prog': self._create_avant_prog_groove,
-            'jazz_fusion': self._create_jazz_fusion_groove,
-            'experimental_rock': self._create_experimental_rock_groove,
-            'art_rock': self._create_art_rock_groove,
-            'math_rock': self._create_math_rock_groove,
-            'krautrock': self._create_krautrock_groove,
-            'post_rock': self._create_post_rock_groove,
-            'no_wave': self._create_no_wave_groove,
-            'avant_garde': self._create_avant_garde_groove,
-            # Blues/Roots (Mejorados)
-            'delta_blues': self._create_delta_blues_groove,
-            'chicago_blues': self._create_chicago_blues_groove,
-            'electric_blues': self._create_electric_blues_groove,
-            'blues_rock': self._create_blues_rock_groove,
-            'psychedelic_blues': self._create_psychedelic_blues_groove,
-            'blues_fusion': self._create_blues_fusion_groove,
-            'roots_blues': self._create_roots_blues_groove,
-            'blues_funk': self._create_blues_funk_groove,
-            'acid_blues': self._create_acid_blues_groove,
-            'blues_experimental': self._create_blues_experimental_groove,
-            # Country/Roots (Mejorados)
-            'outlaw_country': self._create_outlaw_country_groove,
-            'alt_country': self._create_alt_country_groove,
-            'country_rock': self._create_country_rock_groove,
-            'progressive_country': self._create_progressive_country_groove,
-            'country_blues': self._create_country_blues_groove,
-            'psych_country': self._create_psych_country_groove,
-            'country_funk': self._create_country_funk_groove,
-            'americana': self._create_americana_groove,
-            'country_jazz': self._create_country_jazz_groove,
-            'experimental_country': self._create_experimental_country_groove,
-            # Dub/Reggae/Ska
-            'dub': self._create_dub_groove,
-            'reggae': self._create_reggae_groove,
-            'ska': self._create_ska_groove,
-            'rocksteady': self._create_rocksteady_groove,
-            'dubstep': self._create_dubstep_groove,
-            'dub_techno': self._create_dub_techno_groove,
-            'dub_reggae': self._create_dub_reggae_groove,
-            'ska_punk': self._create_ska_punk_groove,
-            'dub_experimental': self._create_dub_experimental_groove,
-            'reggae_fusion': self._create_reggae_fusion_groove,
-            # Música Uruguaya
-            'candombe': self._create_candombe_groove,
-            'murga': self._create_murga_groove,
-            'tango': self._create_tango_groove,
-            'bossa_nova': self._create_bossa_nova_groove,
-            'mpb': self._create_mpb_groove,
-            'tropicalia': self._create_tropicalia_groove,
-            'nueva_cancion': self._create_nueva_cancion_groove,
-            'folk_latino': self._create_folk_latino_groove,
-            'latin_jazz': self._create_latin_jazz_groove,
-            'experimental_latino': self._create_experimental_latino_groove,
-            # Música Argentina
-            'rock_nacional': self._create_rock_nacional_groove,
-            'post_punk_argentino': self._create_post_punk_argentino_groove,
-            'rock_alternativo_argentino': self._create_rock_alternativo_argentino_groove,
-            'punk_argentino': self._create_punk_argentino_groove,
-            'rock_progresivo_argentino': self._create_rock_progresivo_argentino_groove,
-            'rock_experimental_argentino': self._create_rock_experimental_argentino_groove,
-            'rock_psicodelico_argentino': self._create_rock_psicodelico_argentino_groove,
-            'rock_underground_argentino': self._create_rock_underground_argentino_groove,
-            'rock_vanguardista_argentino': self._create_rock_vanguardista_argentino_groove,
-            'rock_experimental_latino': self._create_rock_experimental_latino_groove,
-            'blues_argentino': self._create_blues_argentino_groove,
-            'rock_progresivo_argentino_charly': self._create_rock_progresivo_argentino_charly_groove,
-            'rock_sinfonico_argentino': self._create_rock_sinfonico_argentino_groove,
-            'rock_experimental_argentino_charly': self._create_rock_experimental_argentino_charly_groove,
-            'rock_vanguardista_argentino_charly': self._create_rock_vanguardista_argentino_charly_groove,
-            'rock_psicodelico_argentino_charly': self._create_rock_psicodelico_argentino_charly_groove,
-            'rock_alternativo_argentino_charly': self._create_rock_alternativo_argentino_charly_groove,
-            'rock_underground_argentino_charly': self._create_rock_underground_argentino_charly_groove,
-            'rock_experimental_latino_charly': self._create_rock_experimental_latino_charly_groove,
-            'rock_vanguardista_latino_charly': self._create_rock_vanguardista_latino_charly_groove,
-            'rock_alternativo_argentino_encargados': self._create_rock_alternativo_argentino_encargados_groove,
-            'rock_experimental_argentino_encargados': self._create_rock_experimental_argentino_encargados_groove,
-            'rock_underground_argentino_encargados': self._create_rock_underground_argentino_encargados_groove,
-            'rock_vanguardista_argentino_encargados': self._create_rock_vanguardista_argentino_encargados_groove,
-            'rock_psicodelico_argentino_encargados': self._create_rock_psicodelico_argentino_encargados_groove,
-            'rock_progresivo_argentino_encargados': self._create_rock_progresivo_argentino_encargados_groove,
-            'rock_sinfonico_argentino_encargados': self._create_rock_sinfonico_argentino_encargados_groove,
-            'rock_experimental_latino_encargados': self._create_rock_experimental_latino_encargados_groove,
-            'rock_vanguardista_latino_encargados': self._create_rock_vanguardista_latino_encargados_groove,
-            'rock_alternativo_latino_encargados': self._create_rock_alternativo_latino_encargados_groove,
-            # David Bowie/Glam Rock
-            'glam_rock': self._create_glam_rock_groove,
-            'art_rock_bowie': self._create_art_rock_bowie_groove,
-            'prog_rock_bowie': self._create_prog_rock_bowie_groove,
-            'experimental_rock_bowie': self._create_experimental_rock_bowie_groove,
-            'avant_garde_bowie': self._create_avant_garde_bowie_groove,
-            'art_pop': self._create_art_pop_groove,
-            'glam_punk': self._create_glam_punk_groove,
-            'glam_metal': self._create_glam_metal_groove,
-            'glam_funk': self._create_glam_funk_groove,
-            'glam_experimental': self._create_glam_experimental_groove,
-            # Madchester/Britpop
-            'madchester': self._create_madchester_groove,
-            'baggy': self._create_baggy_groove,
-            'indie_dance': self._create_indie_dance_groove,
-            'acid_house': self._create_acid_house_groove,
-            'rave': self._create_rave_groove,
-            'indie_rock': self._create_indie_rock_groove,
-            'alternative_dance': self._create_alternative_dance_groove,
-            'indie_pop': self._create_indie_pop_groove,
-            'indie_electronic': self._create_indie_electronic_groove,
-            'indie_experimental': self._create_indie_experimental_groove
-        }
-        
-        if genre in genre_methods:
-            return genre_methods[genre](midi, tempo)
-        else:
-            raise ValueError(f"Unknown genre: {genre}")
-    
-    def _add_note(self, midi, drum, bar, beat_pos, velocity=85, duration=0.1):
-        """Add a MIDI note to the track."""
-        time_ticks = (bar * self.midi_config['ticks_per_bar']) + beat_pos
-        midi.addNote(
-            self.midi_config['track'],
-            self.midi_config['channel'],
-            drum,
-            time_ticks / self.midi_config['ppq'],
-            duration,
-            velocity
-        )
-    
-    def _standard_pattern_structure(self, midi, add_basic_pattern_func):
-        """Standard 150-bar structure with fills every 8 bars."""
-        current_bar = 0
-        while current_bar < 149:
-            if current_bar == 148:
-                add_basic_pattern_func(current_bar)
-                current_bar += 1
-            elif (current_bar + 1) % 8 == 0:
-                add_basic_pattern_func(current_bar)
-                current_bar += 1
-            else:
-                add_basic_pattern_func(current_bar)
-                current_bar += 7
-        
-        self._add_note(midi, self.drum_mapping['crash'], 149, 0, 100, 2.0)
-    
-    # ========== EXPERIMENTAL/PROGRESIVO (ESTILO ZAPPA) ==========
-    
-    def _create_prog_rock_groove(self, midi, tempo):
-        """Create prog rock pattern - complex, Frank Zappa style."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Complex kick patterns
-                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 95)
-                self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_sixteenth'] * 3, 90)
-                self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_sixteenth'], 85)
-                
-                # Snare on 2 and 4 with variations
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 100)
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 98)
-                
-                # Irregular hi-hat patterns
-                for sixteenth in range(16):
-                    if sixteenth % 3 == 0 or sixteenth % 5 == 0:
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     sixteenth * self.midi_config['ticks_per_sixteenth'], 
-                                     random.randint(70, 85))
-        
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    def _create_avant_prog_groove(self, midi, tempo):
-        """Create avant-prog pattern - experimental, Captain Beefheart style."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Irregular kick patterns
-                if bar % 2 == 0:
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 0, 95)
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 2 + self.midi_config['ticks_per_sixteenth'] * 2, 90)
-                else:
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_sixteenth'], 90)
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3, 85)
-                
-                # Displaced snare
-                self._add_note(midi, self.drum_mapping['snare'], bar, 
-                             self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_sixteenth'], 100)
-                self._add_note(midi, self.drum_mapping['snare'], bar, 
-                             self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_sixteenth'] * 3, 95)
-                
-                # Chaotic hi-hats
-                for sixteenth in range(16):
-                    if random.random() < 0.6:
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     sixteenth * self.midi_config['ticks_per_sixteenth'], 
-                                     random.randint(60, 80))
-        
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    # Placeholder methods for all remaining genres - each with unique characteristics
-    def _create_jazz_fusion_groove(self, midi, tempo):
-        """Jazz fusion - complex rhythms, Mahavishnu Orchestra style."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 90)
-                self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] * 2 + self.midi_config['ticks_per_sixteenth'] * 3, 85)
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 95)
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 90)
-                for eighth in range(8):
-                    if eighth % 3 != 0:
-                        self._add_note(midi, self.drum_mapping['ride'], bar, 
-                                     eighth * self.midi_config['ticks_per_eighth'], 
-                                     random.randint(70, 80))
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    def _create_experimental_rock_groove(self, midi, tempo):
-        """Experimental rock - unconventional patterns."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Asymmetrical kick pattern
-                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 95)
-                self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_sixteenth'] * 2, 90)
-                self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_sixteenth'], 85)
-                
-                # Off-beat snare
-                self._add_note(midi, self.drum_mapping['snare'], bar, 
-                             self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_sixteenth'], 100)
-                self._add_note(midi, self.drum_mapping['snare'], bar, 
-                             self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_sixteenth'] * 2, 95)
-                
-                # Random hi-hats
-                for sixteenth in range(16):
-                    if random.random() < 0.5:
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     sixteenth * self.midi_config['ticks_per_sixteenth'], 
-                                     random.randint(60, 75))
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    # Creating all 100 genre methods with unique patterns...
-    # For brevity, I'll create representative methods for each category
-    
-    # BLUES METHODS (simplified for space)
-    def _create_delta_blues_groove(self, midi, tempo):
-        """Delta blues - traditional, Robert Johnson style."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 85)
-                self._add_note(midi, self.drum_mapping['kick'], bar, self.midi_config['ticks_per_beat'] * 2, 80)
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 90)
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 85)
-                for eighth in range(8):
-                    if eighth % 2 == 0:
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     eighth * self.midi_config['ticks_per_eighth'], 
-                                     random.randint(65, 75))
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    # ARGENTINIAN ROCK METHODS
-    def _create_rock_nacional_groove(self, midi, tempo):
-        """Rock Nacional - Sumo, Los Redonditos style: aggressive, driving, punk-influenced."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Aggressive kick pattern - Sumo/Redonditos style
-                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 100)  # Strong on 1
-                if bar % 2 == 0:  # Variation every other bar
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_sixteenth'], 95)
-                self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] * 2, 98)  # Strong on 3
-                self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 90)
-                
-                # Powerful snare - characteristic of Argentine rock
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 100)  # 2
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 100)  # 4
-                
-                # Ghost notes for groove (Sumo influence)
-                if bar % 4 != 0:  # Add ghost notes in some bars
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_eighth'], 60)
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 65)
-                
-                # Driving hi-hats - punk influenced
-                for sixteenth in range(16):
-                    if sixteenth % 2 == 0:  # On downbeats and upbeats
-                        velocity = 85 if sixteenth % 4 == 0 else 75  # Accent on beats
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     sixteenth * self.midi_config['ticks_per_sixteenth'], 
-                                     random.randint(velocity-5, velocity+5))
-                
-                # Occasional crashes for intensity (Redonditos style)
-                if bar % 8 == 7:  # Every 8th bar
-                    self._add_note(midi, self.drum_mapping['crash'], bar, 0, 95)
-                    
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    def _create_blues_argentino_groove(self, midi, tempo):
-        """Blues Argentino - Pappo's Blues style: heavy blues with rock attitude."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Heavy kick pattern - Pappo style blues rock
-                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 95)  # Strong on 1
-                self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] * 2, 90)  # On 3
-                
-                # Add some syncopated kicks for blues rock feel
-                if bar % 3 == 0:  # Variation every 3rd bar
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_eighth'], 80)
-                if bar % 4 == 3:  # Different variation
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_sixteenth'], 85)
-                
-                # Powerful snare - blues rock style
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 100)  # 2
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 98)  # 4
-                
-                # Shuffle feel on hi-hats - classic blues
-                for i in range(4):
-                    # Shuffle triplet feel (long-short pattern)
-                    self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                 i * self.midi_config['ticks_per_beat'], 75)  # On beat
-                    self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                 i * self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_eighth'] + self.midi_config['ticks_per_sixteenth'], 70)  # Shuffle off-beat
-                
-                # Occasional ride for variation (Pappo influence)
-                if bar % 6 == 4 or bar % 6 == 5:  # Some bars use ride instead
-                    for i in range(4):
-                        self._add_note(midi, self.drum_mapping['ride'], bar, 
-                                     i * self.midi_config['ticks_per_beat'], 80)
-                        if i % 2 == 1:  # Bell on 2 and 4
-                            self._add_note(midi, self.drum_mapping['ride'], bar, 
-                                         i * self.midi_config['ticks_per_beat'], 85)
-                
-                # Tom fills for blues rock flavor
-                if bar % 16 == 15:  # Every 16th bar, tom fill
-                    self._add_note(midi, self.drum_mapping['tom_high'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 90)
-                    self._add_note(midi, self.drum_mapping['tom_mid'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'] + self.midi_config['ticks_per_sixteenth'], 85)
-                    self._add_note(midi, self.drum_mapping['tom_low'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 4 - self.midi_config['ticks_per_sixteenth'], 95)
-                    
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    # MADCHESTER METHODS
-    def _create_madchester_groove(self, midi, tempo):
-        """Madchester - Happy Mondays, Stone Roses style: danceable, funky, psychedelic."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Four-on-floor kick with funk variations - Happy Mondays style
-                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 95)  # 1
-                self._add_note(midi, self.drum_mapping['kick'], bar, self.midi_config['ticks_per_beat'], 90)  # 2
-                self._add_note(midi, self.drum_mapping['kick'], bar, self.midi_config['ticks_per_beat'] * 2, 95)  # 3
-                self._add_note(midi, self.drum_mapping['kick'], bar, self.midi_config['ticks_per_beat'] * 3, 90)  # 4
-                
-                # Add some syncopated kicks for funk feel
-                if bar % 2 == 1:  # Alternate bars
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_eighth'], 80)
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 75)
-                
-                # Backbeat snare - dance oriented
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 100)  # 2
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 100)  # 4
-                
-                # Funky ghost notes (Happy Mondays influence)
-                if bar % 4 != 0:
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_sixteenth'], 50)
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 2 + self.midi_config['ticks_per_sixteenth'], 55)
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_sixteenth'], 45)
-                
-                # Dance hi-hats - 16th note patterns
-                for sixteenth in range(16):
-                    if sixteenth % 2 == 0:  # On downbeats and upbeats
-                        velocity = 85 if sixteenth % 4 == 0 else 75  # Accent pattern
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     sixteenth * self.midi_config['ticks_per_sixteenth'], 
-                                     velocity + random.randint(-5, 5))
-                
-                # Open hi-hat for dance feel
-                if bar % 8 == 3 or bar % 8 == 7:  # Every 4th bar
-                    self._add_note(midi, self.drum_mapping['open_hh'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 2 + self.midi_config['ticks_per_eighth'], 90)
-                
-                # Occasional crashes for psychedelic touches
-                if bar % 16 == 15:  # Every 16th bar
-                    self._add_note(midi, self.drum_mapping['crash'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 85)
-                    
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    # PLACEHOLDER METHODS FOR ALL REMAINING GENRES
-    # Each would have unique characteristics, but for brevity using template
-    def _create_template_groove(self, midi, tempo, kick_pattern="standard", snare_pattern="standard", hh_pattern="standard"):
-        """Template for creating genre-specific patterns."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Standard kick on 1 and 3
-                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 90)
-                self._add_note(midi, self.drum_mapping['kick'], bar, self.midi_config['ticks_per_beat'] * 2, 85)
-                # Standard snare on 2 and 4
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 95)
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 90)
-                # Standard hi-hats
-                for eighth in range(8):
-                    self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                 eighth * self.midi_config['ticks_per_eighth'], 
-                                 random.randint(70, 80))
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    # UNIQUE IMPLEMENTATIONS FOR KEY GENRES
-    def _create_art_rock_groove(self, midi, tempo):
-        """Art Rock - sophisticated, complex arrangements."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Sophisticated kick pattern
-                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 90)
-                if bar % 3 == 0:  # Complex timing
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 2 + self.midi_config['ticks_per_sixteenth'] * 3, 85)
-                else:
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 2, 85)
-                
-                # Artistic snare placement
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 95)
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 90)
-                
-                # Sophisticated hi-hat work
-                for eighth in range(8):
-                    if eighth % 3 != 0:  # Skip some beats for sophistication
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     eighth * self.midi_config['ticks_per_eighth'], 
-                                     random.randint(65, 75))
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    def _create_math_rock_groove(self, midi, tempo):
-        """Math Rock - complex time signatures and polyrhythms."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Complex polyrhythmic kick pattern
-                kick_pattern = [0, 5, 7, 11, 13]  # Irregular spacing in sixteenths
-                for sixteenth in kick_pattern:
-                    if sixteenth < 16:
-                        self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                     sixteenth * self.midi_config['ticks_per_sixteenth'], 
-                                     random.randint(85, 95))
-                
-                # Snare in 7/8 feel over 4/4
-                snare_positions = [4, 12] if bar % 2 == 0 else [6, 14]
-                for pos in snare_positions:
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 pos * self.midi_config['ticks_per_sixteenth'], 100)
-                
-                # Complex hi-hat polyrhythms
-                for i in range(16):
-                    if i % 5 == 0 or i % 7 == 0:  # Overlapping cycles
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     i * self.midi_config['ticks_per_sixteenth'], 
-                                     random.randint(70, 80))
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    def _create_krautrock_groove(self, midi, tempo):
-        """Krautrock - motorik beat, hypnotic and driving."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Motorik kick - four on the floor
-                for beat in range(4):
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 beat * self.midi_config['ticks_per_beat'], 95)
-                
-                # Minimal snare - only on 2 and 4
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 90)
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 90)
-                
-                # Hypnotic hi-hats - eighth notes
-                for eighth in range(8):
-                    velocity = 80 if eighth % 2 == 0 else 75  # Slight accent
-                    self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                 eighth * self.midi_config['ticks_per_eighth'], velocity)
-                
-                # Occasional ride for texture
-                if bar % 4 >= 2:  # Use ride in some bars
-                    for beat in range(4):
-                        self._add_note(midi, self.drum_mapping['ride'], bar, 
-                                     beat * self.midi_config['ticks_per_beat'], 70)
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    def _create_post_rock_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_no_wave_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_avant_garde_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    
-    # Blues methods
-    def _create_chicago_blues_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_electric_blues_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_blues_rock_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_psychedelic_blues_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_blues_fusion_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_roots_blues_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_blues_funk_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_acid_blues_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_blues_experimental_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    
-    # Country methods
-    def _create_outlaw_country_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_alt_country_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_country_rock_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_progressive_country_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_country_blues_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_psych_country_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_country_funk_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_americana_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_country_jazz_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_experimental_country_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    
-    # DUB/REGGAE METHODS - UNIQUE IMPLEMENTATIONS
-    def _create_dub_groove(self, midi, tempo):
-        """Dub - King Tubby style: spacious, echo-heavy, syncopated."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # One drop kick pattern - classic dub
-                self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] * 2, 95)  # Only on 3
-                
-                # Occasional kick variations
-                if bar % 4 == 3:
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 80)
-                
-                # Rimshot snare - characteristic dub sound
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 90)  # 2
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 90)  # 4
-                
-                # Spacious hi-hats - not every beat
-                for eighth in range(8):
-                    if eighth % 3 == 0:  # Sparse pattern
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     eighth * self.midi_config['ticks_per_eighth'], 
-                                     random.randint(60, 70))
-                
-                # Occasional open hi-hat for space
-                if bar % 8 == 7:
-                    self._add_note(midi, self.drum_mapping['open_hh'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 75)
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    def _create_reggae_groove(self, midi, tempo):
-        """Reggae - Bob Marley style: one drop, emphasis on 3."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Classic one drop - no kick on 1
-                self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] * 2, 95)  # Strong on 3
-                
-                # Sometimes add kick on 4
-                if bar % 2 == 1:
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3, 85)
-                
-                # Backbeat snare
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 85)  # 2
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 85)  # 4
-                
-                # Skank pattern on hi-hats - upbeats
-                for eighth in range(8):
-                    if eighth % 2 == 1:  # Only on upbeats (skank)
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     eighth * self.midi_config['ticks_per_eighth'], 
-                                     random.randint(75, 85))
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    def _create_ska_groove(self, midi, tempo):
-        """Ska - The Skatalites style: upbeat emphasis, driving."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Four on the floor kick
-                for beat in range(4):
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 beat * self.midi_config['ticks_per_beat'], 90)
-                
-                # Backbeat snare
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 95)  # 2
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 95)  # 4
-                
-                # Classic ska skank - upbeats emphasized
-                for eighth in range(8):
-                    velocity = 85 if eighth % 2 == 1 else 70  # Upbeats louder
-                    self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                 eighth * self.midi_config['ticks_per_eighth'], velocity)
-                
-                # Occasional rimshots for ska flavor
-                if bar % 4 == 3:
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_eighth'], 70)
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    def _create_rocksteady_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_dubstep_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_dub_techno_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_dub_reggae_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_ska_punk_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_dub_experimental_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_reggae_fusion_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    
-    # Uruguayan methods
-    def _create_candombe_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_murga_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_tango_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_bossa_nova_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_mpb_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_tropicalia_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_nueva_cancion_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_folk_latino_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_latin_jazz_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_experimental_latino_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    
-    # All remaining Argentine methods
-    def _create_post_punk_argentino_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_alternativo_argentino_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_punk_argentino_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_progresivo_argentino_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_experimental_argentino_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_psicodelico_argentino_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_underground_argentino_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_vanguardista_argentino_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_experimental_latino_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_progresivo_argentino_charly_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_sinfonico_argentino_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_experimental_argentino_charly_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_vanguardista_argentino_charly_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_psicodelico_argentino_charly_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_alternativo_argentino_charly_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_underground_argentino_charly_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_experimental_latino_charly_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_vanguardista_latino_charly_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_alternativo_argentino_encargados_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_experimental_argentino_encargados_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_underground_argentino_encargados_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_vanguardista_argentino_encargados_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_psicodelico_argentino_encargados_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_progresivo_argentino_encargados_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_sinfonico_argentino_encargados_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_experimental_latino_encargados_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_vanguardista_latino_encargados_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rock_alternativo_latino_encargados_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    
-    # Bowie/Glam methods
-    def _create_glam_rock_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_art_rock_bowie_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_prog_rock_bowie_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_experimental_rock_bowie_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_avant_garde_bowie_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_art_pop_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_glam_punk_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_glam_metal_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_glam_funk_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_glam_experimental_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    
-    # Madchester/Britpop methods
-    def _create_baggy_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_indie_dance_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_acid_house_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_rave_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_indie_rock_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_alternative_dance_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_indie_pop_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_indie_electronic_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    def _create_indie_experimental_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
-    
-    def generate_drum_pattern(self, genre, tempo=150, seed=None, output_dir="output"):
-        """Generate drum pattern and save to file."""
-        if genre not in self.available_genres:
-            raise ValueError(f"Unknown genre: {genre}. Available: {list(self.available_genres.keys())}")
-        
-        os.makedirs(output_dir, exist_ok=True)
-        
-        midi_file = self.create_midi_file(genre, tempo, seed)
-        
-        timestamp = int(time.time())
-        filename = f"{genre}_{tempo}bpm_{timestamp}.mid"
-        output_path = os.path.join(output_dir, filename)
-        
-        with open(output_path, "wb") as f:
-            midi_file.writeFile(f)
-        
-        return output_path
+# Add project root to Python path
+project_root = Path(__file__).parent
+sys.path.insert(0, str(project_root))
+
+from core.pattern_generator import PatternGenerator
+
 
 def main():
-    parser = argparse.ArgumentParser(description="Desarticulator - 100 Underground Genres MIDI Drum Pattern Generator")
+    parser = argparse.ArgumentParser(
+        description="Desarticulator v2.0 - Modular Multi-Genre MIDI Drum Pattern Generator"
+    )
     parser.add_argument("--genre", "-g", 
-                       choices=list(Desarticulator().available_genres.keys()),
-                       default='prog_rock', help="Musical genre for drum pattern")
-    parser.add_argument("--tempo", "-t", type=int, default=150, help="Tempo in BPM")
-    parser.add_argument("--seed", "-s", type=int, help="Random seed for reproducible patterns")
-    parser.add_argument("--output", "-o", default="output", help="Output directory")
-    parser.add_argument("--list", "-l", action="store_true", help="List all available genres")
+                       help="Musical genre for drum pattern")
+    parser.add_argument("--tempo", "-t", type=int, default=150, 
+                       help="Tempo in BPM (default: 150)")
+    parser.add_argument("--seed", "-s", type=int, 
+                       help="Random seed for reproducible patterns (optional)")
+    parser.add_argument("--output", "-o", default="output", 
+                       help="Output directory (default: output)")
+    parser.add_argument("--bars", "-b", type=int, default=None,
+                       help="Number of bars to generate (default: varies by section)")
+    parser.add_argument("--section", "-x", 
+                       choices=['intro', 'verse', 'chorus', 'bridge', 'outro'],
+                       help="Generate specific song section (intro/verse/chorus/bridge/outro)")
+    parser.add_argument("--structure", "-z",
+                       choices=['classic_rock', 'pop', 'progressive', 'blues', 'punk', 'ballad'],
+                       help="Generate complete song with structure (150 bars total)")
+    parser.add_argument("--list", "-l", action="store_true", 
+                       help="List all available genres")
+    parser.add_argument("--list-structures", action="store_true",
+                       help="List all available song structures")
+    parser.add_argument("--info", "-i", 
+                       help="Get detailed information about a specific genre")
     
     args = parser.parse_args()
     
-    generator = Desarticulator()
+    # Initialize generator
+    try:
+        generator = PatternGenerator()
+    except Exception as e:
+        print(f"Error initializing pattern generator: {e}")
+        return 1
     
+    # List available genres
     if args.list:
-        print("Available genres (100 underground/avant-garde styles):")
-        for key, name in generator.available_genres.items():
+        available = generator.get_available_genres()
+        if not available:
+            print("No genres available. Make sure pattern modules are properly installed.")
+            return 1
+            
+        print("Available genres:")
+        for key, name in available.items():
             print(f"  {key}: {name}")
         return 0
     
+    # List available structures
+    if args.list_structures:
+        structures = generator.get_available_structures()
+        print("Available song structures (all total 150 bars):")
+        for key, name in structures.items():
+            print(f"  {key}: {name}")
+            try:
+                structure_info = generator.get_structure_info(key)
+                print(f"    {structure_info}")
+            except Exception:
+                pass
+        return 0
+    
+    # Show genre info
+    if args.info:
+        try:
+            info = generator.get_pattern_info(args.info)
+            print(f"Genre: {info['name']}")
+            print(f"Key: {info['genre']}")
+            print(f"Description: {info['description']}")
+            print(f"Available variations: {info['variations']}")
+        except ValueError as e:
+            print(f"Error: {e}")
+            return 1
+        return 0
+    
+    # Generate pattern
+    if not args.genre:
+        available = generator.get_available_genres()
+        if available:
+            print("Please specify a genre with --genre. Available genres:")
+            for key, name in available.items():
+                print(f"  {key}: {name}")
+        else:
+            print("No genres available. Use --list to see available options.")
+        return 1
+    
     try:
-        output_path = generator.generate_drum_pattern(
+        # Set default bars based on section or structure
+        bars = args.bars
+        if bars is None:
+            if args.structure:
+                bars = 150  # Structures are always 150 bars
+            elif args.section == 'intro':
+                bars = 8
+            elif args.section == 'verse':
+                bars = 16
+            elif args.section == 'chorus':
+                bars = 16
+            elif args.section == 'bridge':
+                bars = 8
+            elif args.section == 'outro':
+                bars = 8
+            else:
+                bars = 150  # Full song default
+        
+        session_folder, file_paths = generator.generate_and_save(
             genre=args.genre,
             tempo=args.tempo,
             seed=args.seed,
-            output_dir=args.output
+            output_dir=args.output,
+            bars=bars,
+            section=args.section,
+            structure=args.structure
         )
         
-        print(f"Generated {output_path}")
-        print(f"Genre: {generator.available_genres[args.genre]}")
-        print(f"Tempo: {args.tempo} BPM")
+        # Get pattern info for display
+        info = generator.get_pattern_info(args.genre)
+        
+        print(f"✅ Generated session in: {session_folder}")
+        print(f"🎵 Genre: {info['name']}")
+        print(f"🥁 Description: {info['description']}")
+        if args.structure:
+            print(f"🏗️  Structure: {args.structure.title()} (Complete Song)")
+            try:
+                structure_info = generator.get_structure_info(args.structure)
+                print(f"📋 Layout:\n{structure_info}")
+            except Exception:
+                pass
+        elif args.section:
+            print(f"🎼 Section: {args.section.title()}")
+        print(f"⏱️  Tempo: {args.tempo} BPM")
+        print(f"📊 Bars: {bars}")
         if args.seed:
-            print(f"Seed: {args.seed}")
+            print(f"🎲 Seed: {args.seed}")
+        print(f"🔄 Variations: {info['variations']}")
+        
+        print(f"\n📁 Files generated ({len(file_paths)}):")
+        for file_path in file_paths:
+            filename = os.path.basename(file_path)
+            print(f"   📄 {filename}")
+        
+        print(f"\n📝 Session info: {os.path.join(session_folder, 'session_info.txt')}")
         
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error generating pattern: {e}")
         return 1
     
     return 0
+
 
 if __name__ == "__main__":
     exit(main())

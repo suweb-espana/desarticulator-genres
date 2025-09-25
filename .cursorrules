@@ -1,32 +1,37 @@
-# Desarticulator - MIDI Drum Pattern Generator
+# Desarticulator v2.0 - Modular MIDI Drum Pattern Generator
 # .cursorrules configuration for AI-assisted development
 
 ## Project Overview
-Desarticulator is a modular MIDI drum pattern generator designed for Superior Drummer 3. It creates realistic 150-bar drum grooves with automatic fills, humanized velocities, and multiple musical styles.
+Desarticulator is a modular MIDI drum pattern generator designed for Superior Drummer 3. It creates realistic drum grooves with automatic fills, humanized velocities, pattern variations, song sections, and multiple authentic musical styles.
 
 ## Tech Stack
 - **Language**: Python 3.7+
 - **Core Library**: midiutil (MIDI file generation)
 - **Target**: Superior Drummer 3 (GM Standard mapping)
-- **Structure**: Modular architecture with style-based generators
-- **Output**: MIDI files (.mid) with 150 bars each
+- **Architecture**: Modular pattern-based generator with variation system
+- **Structure**: Genre modules with BasePattern inheritance
+- **Output**: MIDI files (.mid) with customizable bar counts and sections
 
 ## Project Structure
 ```
 desarticulator/
-├── README.md                    # Main documentation
+├── README_v2.md                 # Main v2.0 documentation
+├── desarticulator_v2.py         # Main modular CLI script
+├── core/                        # Core functionality
+│   ├── base_pattern.py         # Abstract base class for patterns
+│   └── pattern_generator.py    # Main generator with genre management
+├── genres/                      # Genre-specific pattern modules
+│   └── argentinian/            # Argentine music genres
+│       ├── rock_nacional.py   # Rock Nacional with 5 variations + sections
+│       └── blues_argentino.py  # Blues Argentino with 5 variations + sections
 ├── docs/                       # All documentation
 │   ├── TECHNICAL_DOCS.md       # Technical specifications
 │   ├── CHANGELOG.md           # Version history
 │   ├── API_REFERENCE.md       # Function reference
 │   └── CONTRIBUTING.md        # Development guidelines
 ├── examples/                   # Usage examples
-│   └── generate_one_drum_file.py
-├── styles/                    # Musical style modules
-│   └── __init__.py
-├── output/                    # Generated MIDI files
-└── samples/                   # Audio resources
-    └── drum_packs/
+├── output/                     # Generated MIDI files
+└── styles/                     # Legacy style modules (deprecated)
 ```
 
 ## Coding Guidelines
@@ -72,48 +77,54 @@ TICKS_PER_BEAT = 480
 
 ## Architecture Patterns
 
-### Style Module Template
+### Pattern Module Template (v2.0)
 ```python
-def create_[style]_groove():
-    # MIDI setup
-    midi = MIDIFile(1)
-    track, channel, tempo, ppq = 0, 9, [BPM], 480
+from core.base_pattern import BasePattern
+from midiutil import MIDIFile
+
+class GenreNamePattern(BasePattern):
+    @property
+    def genre_name(self) -> str:
+        return "Genre Display Name"
     
-    # Drum mapping
-    kick, snare, closed_hh, open_hh, ride, crash, toms = ...
+    @property 
+    def description(self) -> str:
+        return "Genre description with authentic characteristics"
     
-    # Timing constants
-    ticks_per_bar, ticks_per_beat, ticks_per_eighth, ticks_per_sixteenth = ...
+    # Required pattern variations
+    def create_basic_pattern(self, midi: MIDIFile, start_bar: int, bars: int = 8) -> None: ...
+    def create_variation_1(self, midi: MIDIFile, start_bar: int, bars: int = 8) -> None: ...
+    def create_variation_2(self, midi: MIDIFile, start_bar: int, bars: int = 8) -> None: ...
+    def create_fill_simple(self, midi: MIDIFile, bar: int) -> None: ...
+    def create_fill_complex(self, midi: MIDIFile, bar: int) -> None: ...
     
-    # Core functions
-    def add_note(drum, bar, beat_pos, velocity=85, duration=0.1): ...
-    def add_basic_pattern(start_bar): ...
-    def add_variation_1(start_bar): ...
-    def add_fill_simple(bar): ...
-    def add_fill_complex(bar): ...
-    def add_final_fill(bar): ...
-    
-    # Construction logic
-    return midi
+    # Required song sections
+    def create_intro_section(self, midi: MIDIFile, start_bar: int, bars: int = 8) -> None: ...
+    def create_verse_section(self, midi: MIDIFile, start_bar: int, bars: int = 16) -> None: ...
+    def create_chorus_section(self, midi: MIDIFile, start_bar: int, bars: int = 16) -> None: ...
+    def create_bridge_section(self, midi: MIDIFile, start_bar: int, bars: int = 8) -> None: ...
+    def create_outro_section(self, midi: MIDIFile, start_bar: int, bars: int = 8) -> None: ...
 ```
 
-### Required Functions
-Every style module must implement:
-- `add_basic_pattern(start_bar, bars=8)` - Core rhythm
-- `add_variation_1(start_bar, bars=8)` - First variation
-- `add_fill_simple(bar)` - Simple transitions
-- `add_fill_complex(bar)` - Complex fills
-- `add_final_fill(bar)` - Epic ending
+### Required Implementation
+Every genre pattern module must implement:
+- **Pattern Variations**: `basic_pattern`, `variation_1`, `variation_2`, `fill_simple`, `fill_complex`
+- **Song Sections**: `intro_section`, `verse_section`, `chorus_section`, `bridge_section`, `outro_section`
+- **Properties**: `genre_name`, `description`
+- **Inherit from**: `BasePattern` abstract class
+- **Use helpers**: `self.add_note()`, `self.get_random_velocity()`, `self.should_add_variation()`
 
 ## AI Code Generation Rules
 
 ### When Generating Code
 - **No Spanish**: All code, variables, and comments in English
 - **No extra comments**: Only add comments if specifically requested
-- **Follow patterns**: Use existing code structure as template
+- **Follow patterns**: Use existing modular architecture and BasePattern inheritance
 - **MIDI compliance**: Always use correct channel, PPQ, and mapping
-- **Deterministic**: Use fixed random seeds for reproducibility
+- **Variation system**: Implement all 5 pattern types + 5 song sections
+- **Randomization**: Use `self.get_random_velocity()` for humanization
 - **Error handling**: Minimal, fail fast approach
+- **File creation**: Only create files when explicitly requested by user
 
 ### When Writing Documentation
 - **Language**: Spanish for user-facing docs, English for technical
@@ -123,22 +134,30 @@ Every style module must implement:
 
 ### Code Examples
 
-#### ✅ DO
+#### ✅ DO (v2.0 Modular)
 ```python
-def add_kick_pattern(bar, velocity=95):
-    add_note(KICK, bar, 0, velocity)
-    add_note(KICK, bar, ticks_per_beat * 2, velocity - 5)
+from core.base_pattern import BasePattern
 
-def create_jazz_groove():
-    midi = MIDIFile(1)
-    # Implementation...
+class RockNacionalPattern(BasePattern):
+    def create_basic_pattern(self, midi, start_bar, bars=8):
+        for bar in range(start_bar, start_bar + bars):
+            self.add_note(midi, self.drum_mapping['kick'], bar, 0, 
+                         self.get_random_velocity(95, 5))
+    
+    def create_chorus_section(self, midi, start_bar, bars=16):
+        # More aggressive for chorus
+        for bar in range(start_bar, start_bar + bars):
+            self.add_note(midi, self.drum_mapping['kick'], bar, 0, 100)
 ```
 
 #### ❌ DON'T
 ```python
-def añadir_patron_kick(bar, velocidad=95):  # Spanish names
-    # Añadir nota de kick en el compás  # Spanish comments
-    add_note(KICK, bar, 0, velocidad)
+def crear_patron_rock():  # Spanish function names
+    # Crear patrón básico  # Spanish comments
+    add_note(KICK, bar, 0, velocidad)  # Spanish variables
+
+# Don't create monolithic functions - use modular BasePattern inheritance
+def create_all_patterns_in_one_function():  # Anti-pattern
 ```
 
 ## Development Workflow
@@ -156,11 +175,13 @@ def añadir_patron_kick(bar, velocidad=95):  # Spanish names
 - **Verify**: 150 bars exactly, fills every 8 bars, musical quality
 - **No unit tests**: Focus on manual verification and musical output
 
-### File Organization
-- **New styles**: Create in `styles/[style_name].py`
-- **Examples**: Create in `examples/generate_[style]_file.py`
-- **Documentation**: Update relevant docs/ files
-- **Output**: Generated MIDI files go to `output/`
+### File Organization (v2.0)
+- **New genres**: Create in `genres/[category]/[genre_name].py` (inherit from BasePattern)
+- **Register genres**: Add import in `core/pattern_generator.py`
+- **Examples**: Create in `examples/` only when requested
+- **Documentation**: Update relevant docs/ files only when requested
+- **Output**: Generated MIDI files go to `output/` with section naming
+- **CLI usage**: Use `desarticulator_v2.py` for modular system
 
 ## Quality Standards
 

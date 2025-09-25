@@ -5,8 +5,10 @@ Main pattern generator with modular genre support and variation system.
 import os
 import time
 import importlib
-from typing import Dict, Type, Optional
+from typing import Dict, Type, Optional, Tuple, List
 from core.base_pattern import BasePattern
+from core.song_structure import SongStructureGenerator
+from core.output_manager import OrganizedOutputManager
 
 
 class PatternGenerator:
@@ -14,6 +16,8 @@ class PatternGenerator:
     
     def __init__(self):
         self.patterns: Dict[str, Type[BasePattern]] = {}
+        self.song_structure_generator = SongStructureGenerator()
+        self.output_manager = OrganizedOutputManager()
         self.load_patterns()
     
     def load_patterns(self) -> None:
@@ -60,28 +64,34 @@ class PatternGenerator:
         return pattern_instance
     
     def generate_and_save(self, genre: str, tempo: int = 150, seed: Optional[int] = None,
-                         output_dir: str = "output", bars: int = 150) -> str:
-        """Generate pattern and save to MIDI file."""
-        # Create output directory
-        os.makedirs(output_dir, exist_ok=True)
+                         output_dir: str = "output", bars: int = 150, section: Optional[str] = None,
+                         structure: Optional[str] = None) -> Tuple[str, List[str]]:
+        """Generate pattern and save organized output."""
+        # Update output manager base directory
+        self.output_manager.base_output_dir = output_dir
         
-        # Generate pattern
+        # Generate pattern instance
         pattern_instance = self.generate_pattern(genre, tempo, seed, bars)
-        midi_file = pattern_instance.generate_pattern(bars)
         
-        # Create filename
-        timestamp = int(time.time())
-        filename = f"{genre}_{tempo}bpm_{timestamp}.mid"
-        if seed is not None:
-            filename = f"{genre}_{tempo}bpm_seed{seed}_{timestamp}.mid"
-        
-        output_path = os.path.join(output_dir, filename)
-        
-        # Save MIDI file
-        with open(output_path, "wb") as f:
-            midi_file.writeFile(f)
-        
-        return output_path
+        if structure:
+            # Generate complete song with all individual sections
+            song_structure = self.song_structure_generator.get_structure(structure)
+            session_folder, file_paths = self.output_manager.generate_complete_song_organized(
+                pattern_instance, song_structure, genre, tempo, seed
+            )
+            return session_folder, file_paths
+        elif section:
+            # Generate single section
+            session_folder, section_path = self.output_manager.generate_single_section_organized(
+                pattern_instance, section, bars, genre, tempo, seed
+            )
+            return session_folder, [section_path]
+        else:
+            # Generate traditional pattern
+            session_folder, pattern_path = self.output_manager.generate_traditional_pattern_organized(
+                pattern_instance, bars, genre, tempo, seed
+            )
+            return session_folder, [pattern_path]
     
     def get_pattern_info(self, genre: str) -> Dict[str, str]:
         """Get information about a specific pattern."""
@@ -97,3 +107,11 @@ class PatternGenerator:
             'description': temp_instance.description,
             'variations': ', '.join(temp_instance.variation_types)
         }
+    
+    def get_available_structures(self) -> Dict[str, str]:
+        """Get available song structures."""
+        return self.song_structure_generator.get_available_structures()
+    
+    def get_structure_info(self, structure_name: str) -> str:
+        """Get detailed information about a song structure."""
+        return self.song_structure_generator.get_structure_info(structure_name)

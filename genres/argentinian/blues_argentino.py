@@ -171,3 +171,45 @@ class BluesArgentinoPattern(BasePattern):
             pos = self.midi_config['ticks_per_beat'] * 4 - self.midi_config['ticks_per_sixteenth'] * (4 - i)
             self.add_note(midi, self.drum_mapping['snare'], bar, pos, 
                          self.get_random_velocity(95 + i * 5, 3))
+    
+    # ========== SONG SECTIONS ==========
+    
+    def create_intro_section(self, midi: MIDIFile, start_bar: int, bars: int = 8) -> None:
+        """Intro - blues build-up."""
+        for bar in range(start_bar, start_bar + bars):
+            if bar < start_bar + 4:
+                # Start with just kick and snare
+                self.add_note(midi, self.drum_mapping['kick'], bar, 0, 
+                             self.get_random_velocity(85, 5))
+                self.add_note(midi, self.drum_mapping['snare'], bar, 
+                             self.midi_config['ticks_per_beat'], 
+                             self.get_random_velocity(90, 5))
+                self.add_note(midi, self.drum_mapping['snare'], bar, 
+                             self.midi_config['ticks_per_beat'] * 3, 
+                             self.get_random_velocity(88, 5))
+            else:
+                # Add shuffle feel
+                self.create_basic_pattern(midi, bar, 1)
+    
+    def create_verse_section(self, midi: MIDIFile, start_bar: int, bars: int = 16) -> None:
+        """Verse - steady blues groove."""
+        for bar in range(start_bar, start_bar + bars):
+            self.create_basic_pattern(midi, bar, 1)
+    
+    def create_chorus_section(self, midi: MIDIFile, start_bar: int, bars: int = 16) -> None:
+        """Chorus - more intense blues."""
+        for bar in range(start_bar, start_bar + bars):
+            self.create_variation_1(midi, bar, 1)
+    
+    def create_bridge_section(self, midi: MIDIFile, start_bar: int, bars: int = 8) -> None:
+        """Bridge - different blues feel."""
+        for bar in range(start_bar, start_bar + bars):
+            self.create_variation_2(midi, bar, 1)
+    
+    def create_outro_section(self, midi: MIDIFile, start_bar: int, bars: int = 8) -> None:
+        """Outro - blues ending."""
+        for bar in range(start_bar, start_bar + bars):
+            if bar < start_bar + bars - 2:
+                self.create_variation_1(midi, bar, 1)
+            else:
+                self.create_fill_complex(midi, bar)
