@@ -26,7 +26,7 @@ pip install midiutil
 
 ### Generar un Patrón de Punk Rock
 ```bash
-python3 generate_one_drum_file.py
+python3 examples/generate_one_drum_file.py
 ```
 
 Esto genera `PunkRock150bars.mid` listo para importar en Superior Drummer 3.
@@ -101,20 +101,25 @@ toms = 80-95            # Fills y solos
 ```
 desarticulator/
 ├── README.md                          # Este archivo
-├── TECHNICAL_DOCS.md                  # Documentación técnica detallada
-├── generate_one_drum_file.py          # Generador principal (Punk Rock)
-├── styles/                            # Futuros generadores por estilo
+├── docs/                              # Documentación completa
+│   ├── TECHNICAL_DOCS.md              # Especificaciones técnicas
+│   ├── CHANGELOG.md                   # Historial de versiones
+│   ├── API_REFERENCE.md               # Referencia de API
+│   └── CONTRIBUTING.md                # Guía de contribución
+├── examples/                          # Ejemplos de uso
+│   └── generate_one_drum_file.py      # Generador Punk Rock
+├── styles/                            # Módulos de estilos musicales
+│   ├── __init__.py                    # Registro de estilos
 │   ├── punk_rock.py                   # Módulo Punk Rock
 │   ├── classic_rock.py                # Módulo Rock Clásico
-│   ├── jazz.py                        # Módulo Jazz
-│   └── ...                            # Otros estilos
+│   └── jazz.py                        # Módulo Jazz
 ├── output/                            # Archivos MIDI generados
-│   ├── PunkRock150bars.mid
-│   └── ...
-└── samples/                           # Archivos de muestra existentes
-    ├── complete_drum_pack_81bpm/
-    ├── complete_drum_pack_85bpm/
-    └── complete_drum_pack_94bpm/
+│   └── *.mid                          # Patrones exportados
+└── samples/                           # Recursos de audio
+    └── drum_packs/                    # Paquetes de batería
+        ├── complete_drum_pack_81bpm/
+        ├── complete_drum_pack_85bpm/
+        └── complete_drum_pack_94bpm/
 ```
 
 ## 🎛️ Configuración Avanzada
