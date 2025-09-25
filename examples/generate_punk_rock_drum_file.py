@@ -1,5 +1,6 @@
 from midiutil import MIDIFile
 import random
+import os
 
 random.seed(42)
 
@@ -172,10 +173,13 @@ def create_punk_rock_groove():
 def main():
     midi_file = create_punk_rock_groove()
     
-    with open("PunkRock150bars.mid", "wb") as output_file:
+    os.makedirs("output", exist_ok=True)
+    output_path = "output/PunkRock150bars.mid"
+    
+    with open(output_path, "wb") as output_file:
         midi_file.writeFile(output_file)
     
-    print("Generated PunkRock150bars.mid with 150 bars")
+    print(f"Generated {output_path} with 150 bars")
 
 if __name__ == "__main__":
     main()
