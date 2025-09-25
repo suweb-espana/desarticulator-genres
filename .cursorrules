@@ -1,0 +1,235 @@
+# Desarticulator - MIDI Drum Pattern Generator
+# .cursorrules configuration for AI-assisted development
+
+## Project Overview
+Desarticulator is a modular MIDI drum pattern generator designed for Superior Drummer 3. It creates realistic 150-bar drum grooves with automatic fills, humanized velocities, and multiple musical styles.
+
+## Tech Stack
+- **Language**: Python 3.7+
+- **Core Library**: midiutil (MIDI file generation)
+- **Target**: Superior Drummer 3 (GM Standard mapping)
+- **Structure**: Modular architecture with style-based generators
+- **Output**: MIDI files (.mid) with 150 bars each
+
+## Project Structure
+```
+desarticulator/
+├── README.md                    # Main documentation
+├── docs/                       # All documentation
+│   ├── TECHNICAL_DOCS.md       # Technical specifications
+│   ├── CHANGELOG.md           # Version history
+│   ├── API_REFERENCE.md       # Function reference
+│   └── CONTRIBUTING.md        # Development guidelines
+├── examples/                   # Usage examples
+│   └── generate_one_drum_file.py
+├── styles/                    # Musical style modules
+│   └── __init__.py
+├── output/                    # Generated MIDI files
+└── samples/                   # Audio resources
+    └── drum_packs/
+```
+
+## Coding Guidelines
+
+### Language & Comments
+- **Code language**: English only (no Spanish in code)
+- **Comments**: Minimal, only when necessary for complex logic
+- **Docstrings**: Use for public functions, follow Google style
+- **Variable names**: snake_case, descriptive English
+- **Function names**: snake_case, action-oriented
+
+### Naming Conventions
+```python
+# Functions
+def create_punk_rock_groove():
+def add_basic_pattern(start_bar):
+def add_fill_simple(bar):
+
+# Variables
+ticks_per_bar = 1920
+velocity_range = (85, 100)
+drum_mapping = {...}
+
+# Constants
+KICK = 36
+SNARE = 38
+TICKS_PER_BEAT = 480
+```
+
+### Code Style
+- **Formatting**: Follow PEP 8
+- **Line length**: 100 characters max
+- **Imports**: Standard library first, then third-party, then local
+- **No inline comments** unless specifically requested
+- **Clean code**: No unnecessary comments or documentation
+
+### MIDI Standards
+- **Channel**: Always use 9 (MIDI channel 10)
+- **PPQ**: 480 (maximum resolution)
+- **GM Mapping**: Standard drum mapping (kick=36, snare=38, etc.)
+- **Velocities**: 1-127 range, realistic humanized values
+- **Duration**: Typically 0.1 beats for drum hits
+
+## Architecture Patterns
+
+### Style Module Template
+```python
+def create_[style]_groove():
+    # MIDI setup
+    midi = MIDIFile(1)
+    track, channel, tempo, ppq = 0, 9, [BPM], 480
+    
+    # Drum mapping
+    kick, snare, closed_hh, open_hh, ride, crash, toms = ...
+    
+    # Timing constants
+    ticks_per_bar, ticks_per_beat, ticks_per_eighth, ticks_per_sixteenth = ...
+    
+    # Core functions
+    def add_note(drum, bar, beat_pos, velocity=85, duration=0.1): ...
+    def add_basic_pattern(start_bar): ...
+    def add_variation_1(start_bar): ...
+    def add_fill_simple(bar): ...
+    def add_fill_complex(bar): ...
+    def add_final_fill(bar): ...
+    
+    # Construction logic
+    return midi
+```
+
+### Required Functions
+Every style module must implement:
+- `add_basic_pattern(start_bar, bars=8)` - Core rhythm
+- `add_variation_1(start_bar, bars=8)` - First variation
+- `add_fill_simple(bar)` - Simple transitions
+- `add_fill_complex(bar)` - Complex fills
+- `add_final_fill(bar)` - Epic ending
+
+## AI Code Generation Rules
+
+### When Generating Code
+- **No Spanish**: All code, variables, and comments in English
+- **No extra comments**: Only add comments if specifically requested
+- **Follow patterns**: Use existing code structure as template
+- **MIDI compliance**: Always use correct channel, PPQ, and mapping
+- **Deterministic**: Use fixed random seeds for reproducibility
+- **Error handling**: Minimal, fail fast approach
+
+### When Writing Documentation
+- **Language**: Spanish for user-facing docs, English for technical
+- **Structure**: Follow existing docs/ organization
+- **Examples**: Include practical code examples
+- **API docs**: Complete function signatures and parameters
+
+### Code Examples
+
+#### ✅ DO
+```python
+def add_kick_pattern(bar, velocity=95):
+    add_note(KICK, bar, 0, velocity)
+    add_note(KICK, bar, ticks_per_beat * 2, velocity - 5)
+
+def create_jazz_groove():
+    midi = MIDIFile(1)
+    # Implementation...
+```
+
+#### ❌ DON'T
+```python
+def añadir_patron_kick(bar, velocidad=95):  # Spanish names
+    # Añadir nota de kick en el compás  # Spanish comments
+    add_note(KICK, bar, 0, velocidad)
+```
+
+## Development Workflow
+
+### Git Conventions
+- **Branch naming**: `feature/add-[style]-style`, `fix/[issue]`
+- **Commit messages**: English, descriptive, follow conventional commits
+- **Examples**:
+  - `feat: add jazz drum pattern generator`
+  - `fix: correct velocity ranges for metal style`
+  - `docs: update API reference for new functions`
+
+### Testing Requirements
+- **Manual testing**: Generate MIDI, import to Superior Drummer 3
+- **Verify**: 150 bars exactly, fills every 8 bars, musical quality
+- **No unit tests**: Focus on manual verification and musical output
+
+### File Organization
+- **New styles**: Create in `styles/[style_name].py`
+- **Examples**: Create in `examples/generate_[style]_file.py`
+- **Documentation**: Update relevant docs/ files
+- **Output**: Generated MIDI files go to `output/`
+
+## Quality Standards
+
+### Musical Quality
+- **Realistic patterns**: Based on actual drumming techniques
+- **Humanized velocities**: Natural variation in note strength
+- **Proper fills**: Musical transitions every 8 bars
+- **Style authenticity**: Each style should sound authentic
+
+### Technical Quality
+- **Modular design**: Easy to add new styles
+- **Consistent API**: All styles follow same function structure
+- **Performance**: Efficient MIDI generation
+- **Maintainability**: Clean, readable code
+
+## Automation Guidelines
+
+### Before Committing
+- Test MIDI generation works
+- Verify 150 bars output
+- Check no Spanish in code
+- Ensure proper file organization
+
+### Code Review Focus
+- Musical authenticity
+- Code consistency
+- Documentation updates
+- File organization
+
+## Examples of Good vs Bad
+
+### ✅ Good Style Module
+```python
+def create_metal_groove():
+    midi = MIDIFile(1)
+    track, channel, tempo, ppq = 0, 9, 180, 480
+    
+    def add_note(drum, bar, beat_pos, velocity=85, duration=0.1):
+        time_ticks = (bar * ticks_per_bar) + beat_pos
+        midi.addNote(track, channel, drum, time_ticks / ppq, duration, velocity)
+    
+    def add_basic_pattern(start_bar):
+        for bar in range(start_bar, start_bar + 8):
+            add_note(KICK, bar, 0, 100)
+            add_note(SNARE, bar, ticks_per_beat, 100)
+```
+
+### ❌ Bad Style Module
+```python
+def crear_groove_metal():  # Spanish function name
+    # Configuración MIDI  # Spanish comments
+    midi = MIDIFile(1)
+    # ... implementation with Spanish variable names
+```
+
+## Special Considerations
+
+### MIDI Technical Details
+- **Time signature**: Always 4/4
+- **Resolution**: Up to sixteenth notes (120 ticks)
+- **Bar structure**: 1920 ticks per bar
+- **Fill frequency**: Every 8 bars
+- **Final structure**: Epic fill at bar 149, crash at bar 150
+
+### Style-Specific Guidelines
+- **Punk**: Aggressive, direct, fast tom fills
+- **Jazz**: Swing feel, ride prominence, subtle fills
+- **Metal**: Double bass, blast beats, frequent crashes
+- **Funk**: Ghost notes, syncopated groove, open hi-hats
+- **Latin**: Syncopated patterns, clave-based rhythms
+
+Remember: This is a musical tool. Focus on creating authentic, playable drum patterns that sound like real drummers, not just technical MIDI generation.
