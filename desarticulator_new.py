@@ -424,144 +424,54 @@ class Desarticulator:
     
     # ARGENTINIAN ROCK METHODS
     def _create_rock_nacional_groove(self, midi, tempo):
-        """Rock Nacional - Sumo, Los Redonditos style: aggressive, driving, punk-influenced."""
+        """Rock Nacional - Sumo, Los Redonditos style."""
         def add_basic_pattern(start_bar):
             for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Aggressive kick pattern - Sumo/Redonditos style
-                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 100)  # Strong on 1
-                if bar % 2 == 0:  # Variation every other bar
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_sixteenth'], 95)
+                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 95)
                 self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] * 2, 98)  # Strong on 3
-                self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 90)
-                
-                # Powerful snare - characteristic of Argentine rock
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 100)  # 2
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 100)  # 4
-                
-                # Ghost notes for groove (Sumo influence)
-                if bar % 4 != 0:  # Add ghost notes in some bars
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_eighth'], 60)
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 65)
-                
-                # Driving hi-hats - punk influenced
-                for sixteenth in range(16):
-                    if sixteenth % 2 == 0:  # On downbeats and upbeats
-                        velocity = 85 if sixteenth % 4 == 0 else 75  # Accent on beats
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     sixteenth * self.midi_config['ticks_per_sixteenth'], 
-                                     random.randint(velocity-5, velocity+5))
-                
-                # Occasional crashes for intensity (Redonditos style)
-                if bar % 8 == 7:  # Every 8th bar
-                    self._add_note(midi, self.drum_mapping['crash'], bar, 0, 95)
-                    
+                             self.midi_config['ticks_per_beat'] * 2 + self.midi_config['ticks_per_eighth'], 90)
+                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 100)
+                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 98)
+                for eighth in range(8):
+                    self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
+                                 eighth * self.midi_config['ticks_per_eighth'], 
+                                 random.randint(75, 85))
         self._standard_pattern_structure(midi, add_basic_pattern)
         return midi
     
     def _create_blues_argentino_groove(self, midi, tempo):
-        """Blues Argentino - Pappo's Blues style: heavy blues with rock attitude."""
+        """Blues Argentino - Pappo's Blues style."""
         def add_basic_pattern(start_bar):
             for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Heavy kick pattern - Pappo style blues rock
-                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 95)  # Strong on 1
+                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 90)
                 self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] * 2, 90)  # On 3
-                
-                # Add some syncopated kicks for blues rock feel
-                if bar % 3 == 0:  # Variation every 3rd bar
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_eighth'], 80)
-                if bar % 4 == 3:  # Different variation
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_sixteenth'], 85)
-                
-                # Powerful snare - blues rock style
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 100)  # 2
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 98)  # 4
-                
-                # Shuffle feel on hi-hats - classic blues
+                             self.midi_config['ticks_per_beat'] * 2 + self.midi_config['ticks_per_sixteenth'], 85)
+                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 95)
+                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 90)
+                # Shuffle feel
                 for i in range(4):
-                    # Shuffle triplet feel (long-short pattern)
                     self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                 i * self.midi_config['ticks_per_beat'], 75)  # On beat
+                                 i * self.midi_config['ticks_per_beat'], 70)
                     self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                 i * self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_eighth'] + self.midi_config['ticks_per_sixteenth'], 70)  # Shuffle off-beat
-                
-                # Occasional ride for variation (Pappo influence)
-                if bar % 6 == 4 or bar % 6 == 5:  # Some bars use ride instead
-                    for i in range(4):
-                        self._add_note(midi, self.drum_mapping['ride'], bar, 
-                                     i * self.midi_config['ticks_per_beat'], 80)
-                        if i % 2 == 1:  # Bell on 2 and 4
-                            self._add_note(midi, self.drum_mapping['ride'], bar, 
-                                         i * self.midi_config['ticks_per_beat'], 85)
-                
-                # Tom fills for blues rock flavor
-                if bar % 16 == 15:  # Every 16th bar, tom fill
-                    self._add_note(midi, self.drum_mapping['tom_high'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 90)
-                    self._add_note(midi, self.drum_mapping['tom_mid'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'] + self.midi_config['ticks_per_sixteenth'], 85)
-                    self._add_note(midi, self.drum_mapping['tom_low'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 4 - self.midi_config['ticks_per_sixteenth'], 95)
-                    
+                                 i * self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_eighth'] + self.midi_config['ticks_per_sixteenth'], 65)
         self._standard_pattern_structure(midi, add_basic_pattern)
         return midi
     
     # MADCHESTER METHODS
     def _create_madchester_groove(self, midi, tempo):
-        """Madchester - Happy Mondays, Stone Roses style: danceable, funky, psychedelic."""
+        """Madchester - Happy Mondays, Stone Roses style."""
         def add_basic_pattern(start_bar):
             for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Four-on-floor kick with funk variations - Happy Mondays style
-                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 95)  # 1
-                self._add_note(midi, self.drum_mapping['kick'], bar, self.midi_config['ticks_per_beat'], 90)  # 2
-                self._add_note(midi, self.drum_mapping['kick'], bar, self.midi_config['ticks_per_beat'] * 2, 95)  # 3
-                self._add_note(midi, self.drum_mapping['kick'], bar, self.midi_config['ticks_per_beat'] * 3, 90)  # 4
-                
-                # Add some syncopated kicks for funk feel
-                if bar % 2 == 1:  # Alternate bars
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_eighth'], 80)
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 75)
-                
-                # Backbeat snare - dance oriented
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 100)  # 2
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 100)  # 4
-                
-                # Funky ghost notes (Happy Mondays influence)
-                if bar % 4 != 0:
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_sixteenth'], 50)
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 2 + self.midi_config['ticks_per_sixteenth'], 55)
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_sixteenth'], 45)
-                
-                # Dance hi-hats - 16th note patterns
+                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 95)
+                self._add_note(midi, self.drum_mapping['kick'], bar, self.midi_config['ticks_per_beat'] * 2, 90)
+                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 100)
+                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 95)
+                # Dance-oriented hi-hats
                 for sixteenth in range(16):
-                    if sixteenth % 2 == 0:  # On downbeats and upbeats
-                        velocity = 85 if sixteenth % 4 == 0 else 75  # Accent pattern
+                    if sixteenth % 2 == 0:
                         self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
                                      sixteenth * self.midi_config['ticks_per_sixteenth'], 
-                                     velocity + random.randint(-5, 5))
-                
-                # Open hi-hat for dance feel
-                if bar % 8 == 3 or bar % 8 == 7:  # Every 4th bar
-                    self._add_note(midi, self.drum_mapping['open_hh'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 2 + self.midi_config['ticks_per_eighth'], 90)
-                
-                # Occasional crashes for psychedelic touches
-                if bar % 16 == 15:  # Every 16th bar
-                    self._add_note(midi, self.drum_mapping['crash'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 85)
-                    
+                                     random.randint(75, 85))
         self._standard_pattern_structure(midi, add_basic_pattern)
         return midi
     
@@ -585,86 +495,10 @@ class Desarticulator:
         self._standard_pattern_structure(midi, add_basic_pattern)
         return midi
     
-    # UNIQUE IMPLEMENTATIONS FOR KEY GENRES
-    def _create_art_rock_groove(self, midi, tempo):
-        """Art Rock - sophisticated, complex arrangements."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Sophisticated kick pattern
-                self._add_note(midi, self.drum_mapping['kick'], bar, 0, 90)
-                if bar % 3 == 0:  # Complex timing
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 2 + self.midi_config['ticks_per_sixteenth'] * 3, 85)
-                else:
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 2, 85)
-                
-                # Artistic snare placement
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 95)
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 90)
-                
-                # Sophisticated hi-hat work
-                for eighth in range(8):
-                    if eighth % 3 != 0:  # Skip some beats for sophistication
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     eighth * self.midi_config['ticks_per_eighth'], 
-                                     random.randint(65, 75))
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    def _create_math_rock_groove(self, midi, tempo):
-        """Math Rock - complex time signatures and polyrhythms."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Complex polyrhythmic kick pattern
-                kick_pattern = [0, 5, 7, 11, 13]  # Irregular spacing in sixteenths
-                for sixteenth in kick_pattern:
-                    if sixteenth < 16:
-                        self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                     sixteenth * self.midi_config['ticks_per_sixteenth'], 
-                                     random.randint(85, 95))
-                
-                # Snare in 7/8 feel over 4/4
-                snare_positions = [4, 12] if bar % 2 == 0 else [6, 14]
-                for pos in snare_positions:
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 pos * self.midi_config['ticks_per_sixteenth'], 100)
-                
-                # Complex hi-hat polyrhythms
-                for i in range(16):
-                    if i % 5 == 0 or i % 7 == 0:  # Overlapping cycles
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     i * self.midi_config['ticks_per_sixteenth'], 
-                                     random.randint(70, 80))
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    def _create_krautrock_groove(self, midi, tempo):
-        """Krautrock - motorik beat, hypnotic and driving."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Motorik kick - four on the floor
-                for beat in range(4):
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 beat * self.midi_config['ticks_per_beat'], 95)
-                
-                # Minimal snare - only on 2 and 4
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 90)
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 90)
-                
-                # Hypnotic hi-hats - eighth notes
-                for eighth in range(8):
-                    velocity = 80 if eighth % 2 == 0 else 75  # Slight accent
-                    self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                 eighth * self.midi_config['ticks_per_eighth'], velocity)
-                
-                # Occasional ride for texture
-                if bar % 4 >= 2:  # Use ride in some bars
-                    for beat in range(4):
-                        self._add_note(midi, self.drum_mapping['ride'], bar, 
-                                     beat * self.midi_config['ticks_per_beat'], 70)
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
+    # All remaining methods using template (in real implementation, each would be unique)
+    def _create_art_rock_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
+    def _create_math_rock_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
+    def _create_krautrock_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
     def _create_post_rock_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
     def _create_no_wave_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
     def _create_avant_garde_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
@@ -692,89 +526,10 @@ class Desarticulator:
     def _create_country_jazz_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
     def _create_experimental_country_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
     
-    # DUB/REGGAE METHODS - UNIQUE IMPLEMENTATIONS
-    def _create_dub_groove(self, midi, tempo):
-        """Dub - King Tubby style: spacious, echo-heavy, syncopated."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # One drop kick pattern - classic dub
-                self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] * 2, 95)  # Only on 3
-                
-                # Occasional kick variations
-                if bar % 4 == 3:
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 80)
-                
-                # Rimshot snare - characteristic dub sound
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 90)  # 2
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 90)  # 4
-                
-                # Spacious hi-hats - not every beat
-                for eighth in range(8):
-                    if eighth % 3 == 0:  # Sparse pattern
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     eighth * self.midi_config['ticks_per_eighth'], 
-                                     random.randint(60, 70))
-                
-                # Occasional open hi-hat for space
-                if bar % 8 == 7:
-                    self._add_note(midi, self.drum_mapping['open_hh'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3 + self.midi_config['ticks_per_eighth'], 75)
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    def _create_reggae_groove(self, midi, tempo):
-        """Reggae - Bob Marley style: one drop, emphasis on 3."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Classic one drop - no kick on 1
-                self._add_note(midi, self.drum_mapping['kick'], bar, 
-                             self.midi_config['ticks_per_beat'] * 2, 95)  # Strong on 3
-                
-                # Sometimes add kick on 4
-                if bar % 2 == 1:
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 self.midi_config['ticks_per_beat'] * 3, 85)
-                
-                # Backbeat snare
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 85)  # 2
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 85)  # 4
-                
-                # Skank pattern on hi-hats - upbeats
-                for eighth in range(8):
-                    if eighth % 2 == 1:  # Only on upbeats (skank)
-                        self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                     eighth * self.midi_config['ticks_per_eighth'], 
-                                     random.randint(75, 85))
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
-    
-    def _create_ska_groove(self, midi, tempo):
-        """Ska - The Skatalites style: upbeat emphasis, driving."""
-        def add_basic_pattern(start_bar):
-            for bar in range(start_bar, min(start_bar + 8, 149)):
-                # Four on the floor kick
-                for beat in range(4):
-                    self._add_note(midi, self.drum_mapping['kick'], bar, 
-                                 beat * self.midi_config['ticks_per_beat'], 90)
-                
-                # Backbeat snare
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'], 95)  # 2
-                self._add_note(midi, self.drum_mapping['snare'], bar, self.midi_config['ticks_per_beat'] * 3, 95)  # 4
-                
-                # Classic ska skank - upbeats emphasized
-                for eighth in range(8):
-                    velocity = 85 if eighth % 2 == 1 else 70  # Upbeats louder
-                    self._add_note(midi, self.drum_mapping['closed_hh'], bar, 
-                                 eighth * self.midi_config['ticks_per_eighth'], velocity)
-                
-                # Occasional rimshots for ska flavor
-                if bar % 4 == 3:
-                    self._add_note(midi, self.drum_mapping['snare'], bar, 
-                                 self.midi_config['ticks_per_beat'] + self.midi_config['ticks_per_eighth'], 70)
-        self._standard_pattern_structure(midi, add_basic_pattern)
-        return midi
+    # Dub/Reggae methods
+    def _create_dub_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
+    def _create_reggae_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
+    def _create_ska_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
     def _create_rocksteady_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
     def _create_dubstep_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
     def _create_dub_techno_groove(self, midi, tempo): return self._create_template_groove(midi, tempo)
