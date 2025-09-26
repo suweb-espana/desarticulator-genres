@@ -125,6 +125,7 @@ Every genre pattern module must implement:
 - **Randomization**: Use `self.get_random_velocity()` for humanization
 - **Error handling**: Minimal, fail fast approach
 - **File creation**: Only create files when explicitly requested by user
+- **Genre tracking**: ALWAYS update GENRE_IMPLEMENTATION_STATUS.md when implementing new genres
 
 ### When Writing Documentation
 - **Language**: Spanish for user-facing docs, English for technical
@@ -134,8 +135,9 @@ Every genre pattern module must implement:
 
 ### Code Examples
 
-#### ✅ DO (v2.0 Modular)
+#### ✅ DO (v2.0 Modular with Tracking)
 ```python
+# 1. Create genre module
 from core.base_pattern import BasePattern
 
 class RockNacionalPattern(BasePattern):
@@ -148,6 +150,18 @@ class RockNacionalPattern(BasePattern):
         # More aggressive for chorus
         for bar in range(start_bar, start_bar + bars):
             self.add_note(midi, self.drum_mapping['kick'], bar, 0, 100)
+
+# 2. Register in pattern_generator.py
+try:
+    from genres.argentinian.rock_nacional import RockNacionalPattern
+    self.patterns['rock_nacional'] = RockNacionalPattern
+except ImportError:
+    pass
+
+# 3. MANDATORY: Update GENRE_IMPLEMENTATION_STATUS.md
+# Move rock_nacional from "TO BE IMPLEMENTED" to "IMPLEMENTED"
+# Update progress: 8/100 -> 9/100
+# Update category: Argentinian (2/30) -> (3/30)
 ```
 
 #### ❌ DON'T
@@ -162,9 +176,24 @@ def create_all_patterns_in_one_function():  # Anti-pattern
 
 ## Development Workflow
 
+### Genre Implementation Workflow
+- **Step 1**: Create genre module in appropriate `genres/[category]/[genre_name].py`
+- **Step 2**: Implement all required methods (5 variations + 5 song sections)
+- **Step 3**: Register genre in `core/pattern_generator.py` with try/except import
+- **Step 4**: MANDATORY - Update `GENRE_IMPLEMENTATION_STATUS.md`:
+  - Move genre from "TO BE IMPLEMENTED" to "IMPLEMENTED" 
+  - Update progress counters (X/100 total, X/10 category)
+  - Add implementation date and characteristics
+  - Update category completion percentages
+- **Step 5**: Test generation with `python3 desarticulator.py --genre [genre_name] --list`
+- **Step 6**: Generate example with structure to verify functionality
+- **Step 7**: ASK user if they want to commit (never commit automatically)
+
 ### Git Conventions
 - **Branch naming**: `feature/add-[style]-style`, `fix/[issue]`
-- **Commit messages**: English, descriptive, follow conventional commits
+- **Commit messages**: English ONLY, descriptive, follow conventional commits
+- **NO AUTO-COMMITS**: Never commit automatically unless explicitly requested by user
+- **NO Spanish commits**: All commit messages must be in English
 - **Examples**:
   - `feat: add jazz drum pattern generator`
   - `fix: correct velocity ranges for metal style`
@@ -178,10 +207,11 @@ def create_all_patterns_in_one_function():  # Anti-pattern
 ### File Organization (v2.0)
 - **New genres**: Create in `genres/[category]/[genre_name].py` (inherit from BasePattern)
 - **Register genres**: Add import in `core/pattern_generator.py`
+- **Update tracking**: MANDATORY - Update GENRE_IMPLEMENTATION_STATUS.md with new genre
 - **Examples**: Create in `examples/` only when requested
 - **Documentation**: Update relevant docs/ files only when requested
-- **Output**: Generated MIDI files go to `output/` with section naming
-- **CLI usage**: Use `desarticulator_v2.py` for modular system
+- **Output**: Generated MIDI files go to `output/` with fracaso_inminente_ prefix
+- **CLI usage**: Use `desarticulator.py` for modular system
 
 ## Quality Standards
 
@@ -199,17 +229,31 @@ def create_all_patterns_in_one_function():  # Anti-pattern
 
 ## Automation Guidelines
 
-### Before Committing
+### Before Committing (Only When User Requests)
 - Test MIDI generation works
 - Verify 150 bars output
 - Check no Spanish in code
 - Ensure proper file organization
+- **MANDATORY**: Verify GENRE_IMPLEMENTATION_STATUS.md is updated
+- **NEVER commit automatically** - wait for explicit user request
 
 ### Code Review Focus
 - Musical authenticity
 - Code consistency
+- **Genre tracking**: GENRE_IMPLEMENTATION_STATUS.md updated correctly
 - Documentation updates
 - File organization
+
+### Genre Tracking Rules
+- **File**: `GENRE_IMPLEMENTATION_STATUS.md` is the single source of truth
+- **Format**: Always maintain exact format with checkboxes and progress counters
+- **Updates required**:
+  - Move implemented genre from "TO BE IMPLEMENTED" to "IMPLEMENTED"
+  - Update total progress counter (X/100)
+  - Update category progress counter (X/10)
+  - Add implementation date in "Recent Implementations" section
+  - Update category completion percentages
+- **Never skip**: Genre tracking update is mandatory for every new genre implementation
 
 ## Examples of Good vs Bad
 
@@ -254,3 +298,31 @@ def crear_groove_metal():  # Spanish function name
 - **Latin**: Syncopated patterns, clave-based rhythms
 
 Remember: This is a musical tool. Focus on creating authentic, playable drum patterns that sound like real drummers, not just technical MIDI generation.
+
+## Critical Rules
+
+### MANDATORY Genre Tracking
+- **NEVER implement a new genre without updating GENRE_IMPLEMENTATION_STATUS.md**
+- **ALWAYS move genre from "TO BE IMPLEMENTED" to "IMPLEMENTED" section**
+- **ALWAYS update progress counters (total and category)**
+- **ALWAYS add implementation date to "Recent Implementations"**
+- **ALWAYS update category completion percentages**
+
+### Output File Naming
+- **ALL MIDI files MUST have "fracaso_inminente_" prefix**
+- **NO exceptions** - complete songs, individual sections, traditional patterns
+- **Organized in timestamped session folders**
+- **Include session_info.txt with metadata**
+
+### Project Structure Integrity
+- **NEVER create files outside established structure**
+- **NEVER modify core architecture without explicit request**
+- **ALWAYS use BasePattern inheritance for new genres**
+- **ALWAYS implement all 5 variations + 5 song sections**
+
+### Git and Commit Rules
+- **NEVER commit code automatically**
+- **NEVER push changes to Git automatically**
+- **WAIT for explicit user request** before committing
+- **ASK user before making commits** unless specifically requested
+- **COMMIT MESSAGES**: Always in English only, never in Spanish or other languages
