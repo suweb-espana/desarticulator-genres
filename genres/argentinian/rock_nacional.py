@@ -17,7 +17,7 @@ class RockNacionalPattern(BasePattern):
     
     @property
     def description(self) -> str:
-        return "Aggressive Argentine rock - Sumo, Los Redonditos style: punk-influenced, driving, powerful"
+        return "Aggressive Argentine rock - Sumo, Los Redonditos, Big Manifesto style: punk-influenced, driving, powerful"
     
     def create_basic_pattern(self, midi: MIDIFile, start_bar: int, bars: int = 8) -> None:
         """Basic Rock Nacional pattern - aggressive and driving."""

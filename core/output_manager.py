@@ -118,7 +118,7 @@ class OrganizedOutputManager:
                 pattern_instance.create_outro_section(complete_midi, section.start_bar, section.bars)
         
         # Save complete song
-        complete_filename = f"COMPLETE_{genre}_{structure.name.lower().replace(' ', '_')}_structure_{tempo}bpm.mid"
+        complete_filename = f"fracaso_inminente_COMPLETE_{genre}_{structure.name.lower().replace(' ', '_')}_structure_{tempo}bpm.mid"
         complete_path = session.save_midi_file(complete_midi, complete_filename)
         
         # Generate individual sections
@@ -129,10 +129,10 @@ class OrganizedOutputManager:
             # Create unique section filename
             if section.section_type in section_counter:
                 section_counter[section.section_type] += 1
-                section_filename = f"{section.section_type}_{section_counter[section.section_type]}_{section.bars}bars.mid"
+                section_filename = f"fracaso_inminente_{section.section_type}_{section_counter[section.section_type]}_{section.bars}bars.mid"
             else:
                 section_counter[section.section_type] = 1
-                section_filename = f"{section.section_type}_{section.bars}bars.mid"
+                section_filename = f"fracaso_inminente_{section.section_type}_{section.bars}bars.mid"
             
             # Generate individual section MIDI
             section_midi = pattern_instance.generate_section(section.section_type, section.bars)
@@ -163,7 +163,7 @@ class OrganizedOutputManager:
         section_midi = pattern_instance.generate_section(section_type, bars)
         
         # Save section
-        section_filename = f"{section_type}_{bars}bars.mid"
+        section_filename = f"fracaso_inminente_{section_type}_{bars}bars.mid"
         section_path = session.save_midi_file(section_midi, section_filename)
         
         # Create session summary
@@ -190,7 +190,7 @@ class OrganizedOutputManager:
         pattern_midi = pattern_instance.generate_pattern(bars)
         
         # Save pattern
-        pattern_filename = f"traditional_pattern_{bars}bars.mid"
+        pattern_filename = f"fracaso_inminente_traditional_pattern_{bars}bars.mid"
         pattern_path = session.save_midi_file(pattern_midi, pattern_filename)
         
         # Create session summary

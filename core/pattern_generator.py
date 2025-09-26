@@ -37,10 +37,25 @@ class PatternGenerator:
         except ImportError:
             pass
         
-        # TODO: Add more patterns as they're implemented
-        # from genres.experimental.prog_rock import ProgRockPattern
-        # from genres.madchester.madchester import MadchesterPattern
-        # etc.
+        try:
+            from genres.experimental.prog_rock import ProgRockPattern
+            self.patterns['prog_rock'] = ProgRockPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.madchester.madchester import MadchesterPattern
+            self.patterns['madchester'] = MadchesterPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.argentinian.post_punk_argentino import PostPunkArgentinoPattern
+            self.patterns['post_punk_argentino'] = PostPunkArgentinoPattern
+        except ImportError:
+            pass
+        
+        # TODO: Add remaining 95 patterns as they're implemented
     
     def get_available_genres(self) -> Dict[str, str]:
         """Get dictionary of available genres and their display names."""

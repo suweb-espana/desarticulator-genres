@@ -1,0 +1,42 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-09-25 19:20:03
+Genre: post_punk_argentino
+Description: Dark Argentine post-punk - Sumo, Soda Stereo style: angular, new wave influenced, driving
+Tempo: 150 BPM
+Seed: 42
+
+Structure Information:
+--------------------
+Punk (150 bars):
+  Intro: bars 1-4 (4 bars)
+  Verse: bars 5-20 (16 bars)
+  Chorus: bars 21-28 (8 bars)
+  Verse: bars 29-44 (16 bars)
+  Chorus: bars 45-52 (8 bars)
+  Bridge: bars 53-60 (8 bars)
+  Verse: bars 61-76 (16 bars)
+  Chorus: bars 77-84 (8 bars)
+  Verse: bars 85-100 (16 bars)
+  Chorus: bars 101-108 (8 bars)
+  Verse: bars 109-124 (16 bars)
+  Chorus: bars 125-132 (8 bars)
+  Outro: bars 133-150 (18 bars)
+
+Generated Files:
+---------------
+- COMPLETE_post_punk_argentino_punk_structure_150bpm.mid
+- intro_4bars.mid
+- verse_16bars.mid
+- chorus_8bars.mid
+- verse_2_16bars.mid
+- chorus_2_8bars.mid
+- bridge_8bars.mid
+- verse_3_16bars.mid
+- chorus_3_8bars.mid
+- verse_4_16bars.mid
+- chorus_4_8bars.mid
+- verse_5_16bars.mid
+- chorus_5_8bars.mid
+- outro_18bars.mid
