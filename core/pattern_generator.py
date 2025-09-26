@@ -55,7 +55,32 @@ class PatternGenerator:
         except ImportError:
             pass
         
-        # TODO: Add remaining 95 patterns as they're implemented
+        # Uruguayan genres
+        try:
+            from genres.uruguayan.candombe import CandonbePattern
+            self.patterns['candombe'] = CandonbePattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.uruguayan.murga import MurgaPattern
+            self.patterns['murga'] = MurgaPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.uruguayan.tango import TangoPattern
+            self.patterns['tango'] = TangoPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.uruguayan.bossa_nova import BossaNovaPattern
+            self.patterns['bossa_nova'] = BossaNovaPattern
+        except ImportError:
+            pass
+        
+        # TODO: Add remaining 91 patterns as they're implemented
     
     def get_available_genres(self) -> Dict[str, str]:
         """Get dictionary of available genres and their display names."""

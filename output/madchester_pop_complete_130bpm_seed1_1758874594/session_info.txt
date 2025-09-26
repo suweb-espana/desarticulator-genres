@@ -1,14 +1,15 @@
 # Desarticulator Generation Session
 ========================================
 
-Generated: 2025-09-26 10:14:10
-Genre: rock_nacional
-Description: Aggressive Argentine rock - Sumo, Los Redonditos, Big Manifesto style: punk-influenced, driving, powerful
-Tempo: 160 BPM
+Generated: 2025-09-26 10:16:34
+Genre: madchester
+Description: Danceable Manchester sound - Happy Mondays, Stone Roses style: funky, psychedelic, groove-oriented
+Tempo: 130 BPM
+Seed: 1
 
 Structure Information:
 --------------------
-Classic Rock (150 bars):
+Pop (150 bars):
   Intro: bars 1-8 (8 bars)
   Verse: bars 9-24 (16 bars)
   Chorus: bars 25-40 (16 bars)
@@ -16,13 +17,12 @@ Classic Rock (150 bars):
   Chorus: bars 57-72 (16 bars)
   Bridge: bars 73-80 (8 bars)
   Chorus: bars 81-96 (16 bars)
-  Verse: bars 97-112 (16 bars)
-  Chorus: bars 113-128 (16 bars)
-  Outro: bars 129-150 (22 bars)
+  Chorus: bars 97-112 (16 bars)
+  Outro: bars 113-150 (38 bars)
 
 Generated Files:
 ---------------
-- fracaso_inminente_COMPLETE_rock_nacional_classic_rock_structure_160bpm.mid
+- fracaso_inminente_COMPLETE_madchester_pop_structure_130bpm.mid
 - fracaso_inminente_intro_8bars.mid
 - fracaso_inminente_verse_16bars.mid
 - fracaso_inminente_chorus_16bars.mid
@@ -30,6 +30,5 @@ Generated Files:
 - fracaso_inminente_chorus_2_16bars.mid
 - fracaso_inminente_bridge_8bars.mid
 - fracaso_inminente_chorus_3_16bars.mid
-- fracaso_inminente_verse_3_16bars.mid
 - fracaso_inminente_chorus_4_16bars.mid
-- fracaso_inminente_outro_22bars.mid
+- fracaso_inminente_outro_38bars.mid

@@ -1,13 +1,13 @@
 # Genre Implementation Status - 100 Underground/Avant-Garde Genres
 
-## 📊 **Progress: 5/100 Genres Implemented**
+## 📊 **Progress: 9/100 Genres Implemented**
 
-### ✅ **IMPLEMENTED (5/100):**
+### ✅ **IMPLEMENTED (9/100):**
 
 #### **Argentinian Music (3/30):**
 - ✅ `rock_nacional` - Sumo, Los Redonditos de Ricota, Big Manifesto
 - ✅ `blues_argentino` - Pappo's Blues, Pappo Napolitano
-- ✅ `post_punk_argentino` - Sumo, Soda Stereo (NEW!)
+- ✅ `post_punk_argentino` - Sumo, Soda Stereo
 
 #### **Experimental/Progressive (1/10):**
 - ✅ `prog_rock` - Frank Zappa, King Crimson
@@ -15,9 +15,15 @@
 #### **Madchester/Britpop (1/10):**
 - ✅ `madchester` - Happy Mondays, Stone Roses
 
+#### **Uruguayan Music (4/10):** ✨ **NEW CATEGORY**
+- ✅ `candombe` - Traditional Uruguayan, Afro-Uruguayan polyrhythms
+- ✅ `murga` - Uruguayan carnival, festive marching band style
+- ✅ `tango` - Astor Piazzolla, Gardel, dramatic and passionate
+- ✅ `bossa_nova` - João Gilberto, Tom Jobim, sophisticated and gentle
+
 ---
 
-## 🔄 **TO BE IMPLEMENTED (95/100):**
+## 🔄 **TO BE IMPLEMENTED (91/100):**
 
 ### **Experimental/Progressive (9 remaining):**
 - [ ] `avant_prog` - Zappa, Captain Beefheart
@@ -66,11 +72,7 @@
 - [ ] `dub_experimental` - Avant-garde dub
 - [ ] `reggae_fusion` - Reggae + other genres
 
-### **Uruguayan Music (10 remaining):**
-- [ ] `candombe` - Traditional Uruguayan
-- [ ] `murga` - Uruguayan carnival
-- [ ] `tango` - Astor Piazzolla, Gardel
-- [ ] `bossa_nova` - João Gilberto, Tom Jobim
+### **Uruguayan Music (6 remaining):**
 - [ ] `mpb` - Brazilian Popular Music
 - [ ] `tropicalia` - Caetano Veloso, Gilberto Gil
 - [ ] `nueva_cancion` - Latin American

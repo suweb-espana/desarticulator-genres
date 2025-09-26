@@ -1,11 +1,11 @@
 # Desarticulator Generation Session
 ========================================
 
-Generated: 2025-09-25 19:16:44
+Generated: 2025-09-26 10:16:29
 Genre: prog_rock
 Description: Complex progressive rock - Frank Zappa, King Crimson style: irregular patterns, sophisticated
 Tempo: 140 BPM
-Seed: 42
+Seed: 1
 
 Structure Information:
 --------------------
@@ -22,13 +22,13 @@ Progressive (150 bars):
 
 Generated Files:
 ---------------
-- COMPLETE_prog_rock_progressive_structure_140bpm.mid
-- intro_12bars.mid
-- verse_20bars.mid
-- chorus_16bars.mid
-- verse_2_20bars.mid
-- chorus_2_16bars.mid
-- bridge_16bars.mid
-- verse_3_12bars.mid
-- chorus_3_16bars.mid
-- outro_22bars.mid
+- fracaso_inminente_COMPLETE_prog_rock_progressive_structure_140bpm.mid
+- fracaso_inminente_intro_12bars.mid
+- fracaso_inminente_verse_20bars.mid
+- fracaso_inminente_chorus_16bars.mid
+- fracaso_inminente_verse_2_20bars.mid
+- fracaso_inminente_chorus_2_16bars.mid
+- fracaso_inminente_bridge_16bars.mid
+- fracaso_inminente_verse_3_12bars.mid
+- fracaso_inminente_chorus_3_16bars.mid
+- fracaso_inminente_outro_22bars.mid

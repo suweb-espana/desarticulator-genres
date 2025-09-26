@@ -1,0 +1,32 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-09-26 10:21:34
+Genre: candombe
+Description: Traditional Uruguayan rhythm - Afro-Uruguayan polyrhythmic patterns, call-and-response
+Tempo: 100 BPM
+Seed: 1
+
+Structure Information:
+--------------------
+Ballad (150 bars):
+  Intro: bars 1-12 (12 bars)
+  Verse: bars 13-32 (20 bars)
+  Chorus: bars 33-52 (20 bars)
+  Verse: bars 53-72 (20 bars)
+  Chorus: bars 73-92 (20 bars)
+  Bridge: bars 93-104 (12 bars)
+  Chorus: bars 105-124 (20 bars)
+  Outro: bars 125-150 (26 bars)
+
+Generated Files:
+---------------
+- fracaso_inminente_COMPLETE_candombe_ballad_structure_100bpm.mid
+- fracaso_inminente_intro_12bars.mid
+- fracaso_inminente_verse_20bars.mid
+- fracaso_inminente_chorus_20bars.mid
+- fracaso_inminente_verse_2_20bars.mid
+- fracaso_inminente_chorus_2_20bars.mid
+- fracaso_inminente_bridge_12bars.mid
+- fracaso_inminente_chorus_3_20bars.mid
+- fracaso_inminente_outro_26bars.mid

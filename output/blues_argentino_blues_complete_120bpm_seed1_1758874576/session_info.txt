@@ -1,0 +1,34 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-09-26 10:16:16
+Genre: blues_argentino
+Description: Heavy Argentine blues - Pappo's Blues style: shuffle feel, blues rock attitude
+Tempo: 120 BPM
+Seed: 1
+
+Structure Information:
+--------------------
+Blues (150 bars):
+  Intro: bars 1-8 (8 bars)
+  Verse: bars 9-32 (24 bars)
+  Chorus: bars 33-44 (12 bars)
+  Verse: bars 45-68 (24 bars)
+  Chorus: bars 69-80 (12 bars)
+  Bridge: bars 81-96 (16 bars)
+  Verse: bars 97-120 (24 bars)
+  Chorus: bars 121-132 (12 bars)
+  Outro: bars 133-150 (18 bars)
+
+Generated Files:
+---------------
+- fracaso_inminente_COMPLETE_blues_argentino_blues_structure_120bpm.mid
+- fracaso_inminente_intro_8bars.mid
+- fracaso_inminente_verse_24bars.mid
+- fracaso_inminente_chorus_12bars.mid
+- fracaso_inminente_verse_2_24bars.mid
+- fracaso_inminente_chorus_2_12bars.mid
+- fracaso_inminente_bridge_16bars.mid
+- fracaso_inminente_verse_3_24bars.mid
+- fracaso_inminente_chorus_3_12bars.mid
+- fracaso_inminente_outro_18bars.mid

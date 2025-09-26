@@ -1,0 +1,16 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-09-26 10:21:46
+Genre: bossa_nova
+Description: Sophisticated Brazilian rhythm - João Gilberto, Tom Jobim style: subtle, elegant, gentle swing
+Tempo: 90 BPM
+
+Section Information:
+--------------------
+Section: Verse
+Bars: 16
+Type: Individual Section
+Generated Files:
+---------------
+- fracaso_inminente_verse_16bars.mid
