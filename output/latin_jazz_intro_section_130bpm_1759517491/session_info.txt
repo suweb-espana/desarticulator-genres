@@ -1,0 +1,16 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-10-03 20:51:31
+Genre: latin_jazz
+Description: Sophisticated Latin jazz - Afro-Cuban influences with jazz complexity and Latin rhythms
+Tempo: 130 BPM
+
+Section Information:
+--------------------
+Section: Intro
+Bars: 8
+Type: Individual Section
+Generated Files:
+---------------
+- fracaso_inminente_intro_8bars.mid

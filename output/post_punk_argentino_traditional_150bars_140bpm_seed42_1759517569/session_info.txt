@@ -1,0 +1,17 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-10-03 20:52:49
+Genre: post_punk_argentino
+Description: Dark Argentine post-punk - Sumo, Soda Stereo style: angular, new wave influenced, driving
+Tempo: 140 BPM
+Seed: 42
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 150
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_150bars.mid

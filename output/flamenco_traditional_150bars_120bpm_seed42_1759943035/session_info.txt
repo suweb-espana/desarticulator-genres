@@ -1,0 +1,17 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-10-08 19:03:55
+Genre: flamenco
+Description: Traditional Spanish flamenco - compás patterns, palmas, bulerías, soleá, and alegrías rhythms
+Tempo: 120 BPM
+Seed: 42
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 150
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_150bars.mid

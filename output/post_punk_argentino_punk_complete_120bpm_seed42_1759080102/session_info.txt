@@ -1,0 +1,42 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-09-28 19:21:42
+Genre: post_punk_argentino
+Description: Dark Argentine post-punk - Sumo, Soda Stereo style: angular, new wave influenced, driving
+Tempo: 120 BPM
+Seed: 42
+
+Structure Information:
+--------------------
+Punk (150 bars):
+  Intro: bars 1-4 (4 bars)
+  Verse: bars 5-20 (16 bars)
+  Chorus: bars 21-28 (8 bars)
+  Verse: bars 29-44 (16 bars)
+  Chorus: bars 45-52 (8 bars)
+  Bridge: bars 53-60 (8 bars)
+  Verse: bars 61-76 (16 bars)
+  Chorus: bars 77-84 (8 bars)
+  Verse: bars 85-100 (16 bars)
+  Chorus: bars 101-108 (8 bars)
+  Verse: bars 109-124 (16 bars)
+  Chorus: bars 125-132 (8 bars)
+  Outro: bars 133-150 (18 bars)
+
+Generated Files:
+---------------
+- fracaso_inminente_COMPLETE_post_punk_argentino_punk_structure_120bpm.mid
+- fracaso_inminente_intro_4bars.mid
+- fracaso_inminente_verse_16bars.mid
+- fracaso_inminente_chorus_8bars.mid
+- fracaso_inminente_verse_2_16bars.mid
+- fracaso_inminente_chorus_2_8bars.mid
+- fracaso_inminente_bridge_8bars.mid
+- fracaso_inminente_verse_3_16bars.mid
+- fracaso_inminente_chorus_3_8bars.mid
+- fracaso_inminente_verse_4_16bars.mid
+- fracaso_inminente_chorus_4_8bars.mid
+- fracaso_inminente_verse_5_16bars.mid
+- fracaso_inminente_chorus_5_8bars.mid
+- fracaso_inminente_outro_18bars.mid

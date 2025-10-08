@@ -80,7 +80,70 @@ class PatternGenerator:
         except ImportError:
             pass
         
-        # TODO: Add remaining 91 patterns as they're implemented
+        # Blues genres
+        try:
+            from genres.blues.electric_blues import ElectricBluesPattern
+            self.patterns['electric_blues'] = ElectricBluesPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.blues.blues_rock import BluesRockPattern
+            self.patterns['blues_rock'] = BluesRockPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.blues.delta_blues import DeltaBluesPattern
+            self.patterns['delta_blues'] = DeltaBluesPattern
+        except ImportError:
+            pass
+        
+        # Complete remaining Uruguayan genres
+        try:
+            from genres.uruguayan.mpb import MPBPattern
+            self.patterns['mpb'] = MPBPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.uruguayan.tropicalia import TropicaliaPattern
+            self.patterns['tropicalia'] = TropicaliaPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.uruguayan.nueva_cancion import NuevaCancionPattern
+            self.patterns['nueva_cancion'] = NuevaCancionPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.uruguayan.folk_latino import FolkLatinoPattern
+            self.patterns['folk_latino'] = FolkLatinoPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.uruguayan.latin_jazz import LatinJazzPattern
+            self.patterns['latin_jazz'] = LatinJazzPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.uruguayan.experimental_latino import ExperimentalLatinoPattern
+            self.patterns['experimental_latino'] = ExperimentalLatinoPattern
+        except ImportError:
+            pass
+        
+        # Spanish genres
+        try:
+            from genres.spanish.flamenco import FlamencoPattern
+            self.patterns['flamenco'] = FlamencoPattern
+        except ImportError:
+            pass
+        
+        # TODO: Add remaining 82 patterns as they're implemented
     
     def get_available_genres(self) -> Dict[str, str]:
         """Get dictionary of available genres and their display names."""

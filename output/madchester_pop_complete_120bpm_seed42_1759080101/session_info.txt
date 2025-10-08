@@ -1,0 +1,34 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-09-28 19:21:41
+Genre: madchester
+Description: Danceable Manchester sound - Happy Mondays, Stone Roses style: funky, psychedelic, groove-oriented
+Tempo: 120 BPM
+Seed: 42
+
+Structure Information:
+--------------------
+Pop (150 bars):
+  Intro: bars 1-8 (8 bars)
+  Verse: bars 9-24 (16 bars)
+  Chorus: bars 25-40 (16 bars)
+  Verse: bars 41-56 (16 bars)
+  Chorus: bars 57-72 (16 bars)
+  Bridge: bars 73-80 (8 bars)
+  Chorus: bars 81-96 (16 bars)
+  Chorus: bars 97-112 (16 bars)
+  Outro: bars 113-150 (38 bars)
+
+Generated Files:
+---------------
+- fracaso_inminente_COMPLETE_madchester_pop_structure_120bpm.mid
+- fracaso_inminente_intro_8bars.mid
+- fracaso_inminente_verse_16bars.mid
+- fracaso_inminente_chorus_16bars.mid
+- fracaso_inminente_verse_2_16bars.mid
+- fracaso_inminente_chorus_2_16bars.mid
+- fracaso_inminente_bridge_8bars.mid
+- fracaso_inminente_chorus_3_16bars.mid
+- fracaso_inminente_chorus_4_16bars.mid
+- fracaso_inminente_outro_38bars.mid

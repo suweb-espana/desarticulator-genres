@@ -1,0 +1,34 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-09-28 19:21:48
+Genre: electric_blues
+Description: Heavy electric blues - B.B. King, Albert King, Pappo style: shuffle feel, rock attitude, powerful
+Tempo: 120 BPM
+Seed: 42
+
+Structure Information:
+--------------------
+Blues (150 bars):
+  Intro: bars 1-8 (8 bars)
+  Verse: bars 9-32 (24 bars)
+  Chorus: bars 33-44 (12 bars)
+  Verse: bars 45-68 (24 bars)
+  Chorus: bars 69-80 (12 bars)
+  Bridge: bars 81-96 (16 bars)
+  Verse: bars 97-120 (24 bars)
+  Chorus: bars 121-132 (12 bars)
+  Outro: bars 133-150 (18 bars)
+
+Generated Files:
+---------------
+- fracaso_inminente_COMPLETE_electric_blues_blues_structure_120bpm.mid
+- fracaso_inminente_intro_8bars.mid
+- fracaso_inminente_verse_24bars.mid
+- fracaso_inminente_chorus_12bars.mid
+- fracaso_inminente_verse_2_24bars.mid
+- fracaso_inminente_chorus_2_12bars.mid
+- fracaso_inminente_bridge_16bars.mid
+- fracaso_inminente_verse_3_24bars.mid
+- fracaso_inminente_chorus_3_12bars.mid
+- fracaso_inminente_outro_18bars.mid
