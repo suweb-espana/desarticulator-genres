@@ -1,0 +1,17 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-10-08 20:06:16
+Genre: fandango
+Description: Traditional Andalusian song - waltz-like 3/4 rhythm, traditional character, classic Spanish folk song patterns
+Tempo: 110 BPM
+Seed: 42
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 150
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_150bars.mid

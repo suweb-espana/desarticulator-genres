@@ -1,0 +1,17 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-10-08 20:03:03
+Genre: rumba_flamenca
+Description: Flamenco rumba with Cuban influences - fusion of traditional flamenco compás with Afro-Cuban rhythms, Latin percussion, and syncopated patterns
+Tempo: 140 BPM
+Seed: 42
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 150
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_150bars.mid

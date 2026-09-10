@@ -1,0 +1,17 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2026-08-28 15:25:47
+Genre: jazz_fusion
+Description: Vinnie Colaiuta on Joe's Garage: Central Scrutinizer vamp plus Catholic Girls 4/4 groove. Mapped for Le Cars.
+Tempo: 112 BPM
+Seed: 42
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 150
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_150bars.mid

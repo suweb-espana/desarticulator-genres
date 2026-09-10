@@ -1,0 +1,17 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-10-08 20:07:14
+Genre: seguiriya
+Description: Tragic and profound flamenco style - complex 12-beat compás, slow tempo, deep emotional palmas, most tragic flamenco palo
+Tempo: 100 BPM
+Seed: 42
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 150
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_150bars.mid

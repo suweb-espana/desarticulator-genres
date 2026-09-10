@@ -1,0 +1,16 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-12-31 12:57:21
+Genre: dub
+Description: Minimal dub rhythms with spaced-out patterns, one drop emphasis, and hypnotic repetition inspired by King Tubby and Lee Perry
+Tempo: 120 BPM
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 150
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_150bars.mid

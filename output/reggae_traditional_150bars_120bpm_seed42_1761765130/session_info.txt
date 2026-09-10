@@ -1,0 +1,17 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-10-29 20:12:10
+Genre: reggae
+Description: Authentic Jamaican reggae with one drop rhythm, skank patterns, shuffle feel, and traditional reggae drumming techniques
+Tempo: 120 BPM
+Seed: 42
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 150
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_150bars.mid

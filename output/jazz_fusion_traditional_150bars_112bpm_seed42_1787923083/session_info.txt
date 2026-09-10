@@ -1,0 +1,17 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2026-08-28 15:18:03
+Genre: jazz_fusion
+Description: Vinnie Colaiuta on The Central Scrutinizer: 4/4 vamp, tom melody, Closed Accent on 3, kick mutations. Mapped for Le Cars.
+Tempo: 112 BPM
+Seed: 42
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 150
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_150bars.mid

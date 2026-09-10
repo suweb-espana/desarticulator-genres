@@ -1,0 +1,17 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-10-08 19:11:22
+Genre: solea
+Description: Deep, emotional flamenco style - dramatic 12-beat compás, slow tempo, profound palmas, most emotional flamenco palo
+Tempo: 100 BPM
+Seed: 42
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 150
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_150bars.mid

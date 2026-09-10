@@ -44,6 +44,12 @@ class PatternGenerator:
             pass
         
         try:
+            from genres.experimental.jazz_fusion import JazzFusionPattern
+            self.patterns['jazz_fusion'] = JazzFusionPattern
+        except ImportError:
+            pass
+        
+        try:
             from genres.madchester.madchester import MadchesterPattern
             self.patterns['madchester'] = MadchesterPattern
         except ImportError:
@@ -143,7 +149,74 @@ class PatternGenerator:
         except ImportError:
             pass
         
-        # TODO: Add remaining 82 patterns as they're implemented
+        try:
+            from genres.spanish.bulerias import BuleriasPattern
+            self.patterns['bulerias'] = BuleriasPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.spanish.solea import SoleaPattern
+            self.patterns['solea'] = SoleaPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.spanish.alegrias import AlegriasPattern
+            self.patterns['alegrias'] = AlegriasPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.spanish.rumba_flamenca import RumbaFlamencaPattern
+            self.patterns['rumba_flamenca'] = RumbaFlamencaPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.spanish.sevillanas import SevillanasPattern
+            self.patterns['sevillanas'] = SevillanasPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.spanish.fandango import FandangoPattern
+            self.patterns['fandango'] = FandangoPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.spanish.seguiriya import SeguiriyaPattern
+            self.patterns['seguiriya'] = SeguiriyaPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.spanish.tanguillo import TanguilloPattern
+            self.patterns['tanguillo'] = TanguilloPattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.spanish.flamenco_fusion import FlamencoFusionPattern
+            self.patterns['flamenco_fusion'] = FlamencoFusionPattern
+        except ImportError:
+            pass
+        
+        # Dub/Reggae/Ska genres
+        try:
+            from genres.dub_reggae.reggae import ReggaePattern
+            self.patterns['reggae'] = ReggaePattern
+        except ImportError:
+            pass
+        
+        try:
+            from genres.dub_reggae.dub import DubPattern
+            self.patterns['dub'] = DubPattern
+        except ImportError:
+            pass
+        
+        # TODO: Add remaining 80 patterns as they're implemented
     
     def get_available_genres(self) -> Dict[str, str]:
         """Get dictionary of available genres and their display names."""

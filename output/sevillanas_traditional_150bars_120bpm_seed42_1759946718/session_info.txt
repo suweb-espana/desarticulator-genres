@@ -1,0 +1,17 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2025-10-08 20:05:18
+Genre: sevillanas
+Description: Traditional Andalusian folk dance - waltz-like 3/4 rhythm, festive character, traditional Spanish folk patterns
+Tempo: 120 BPM
+Seed: 42
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 150
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_150bars.mid
