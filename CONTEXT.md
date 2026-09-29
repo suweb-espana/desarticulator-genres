@@ -27,3 +27,11 @@ _Avoid_: open hat, MIDI note 46 as the beat-3 color
 **Prog Rock**:
 Irregular rock drumming already in the project: hats, snare on 2 and 4, 5-against-4 and 7-against-4 groupings. Distinct from Jazz Fusion.
 _Avoid_: Jazz Fusion, Joe's Garage
+
+**Dub Reggae**:
+Prince Buster's rocksteady shuffle fused with the spaced-out dub production of Scientist, Prince Far I, and Augustus Pablo: swung one drop at 90 BPM, tight clear kick/snare hits, dub-style drops (stripped-back space that hits hard on the return), rim/cowbell as GM-extended color, and occasional triplet kick breaks for punch. The swung hi-hat/ride skank is the main pulse — see [[La Pompe]] for why it isn't.
+_Avoid_: straight (unswung) offbeats as the main pulse, King Tubby minimalism as the primary voice, loose/inconsistent kick-snare velocity, triplet kick breaks as the default groove (occasional accent only, not the norm)
+
+**La Pompe**:
+Django Reinhardt's gypsy jazz rhythm-guitar comp. Tried as the constant rim pulse for the whole Dub Reggae tune (straight, muted eighth notes every bar) and it killed the groove — flat, mechanical, no harmony to carry it the way Django's chord changes do on guitar. Demoted to a rare color: two straight quarter-note rim hits in the bridge's quiet half only.
+_Avoid_: using it as the main pulse or across the whole song again, more than two hits per bar

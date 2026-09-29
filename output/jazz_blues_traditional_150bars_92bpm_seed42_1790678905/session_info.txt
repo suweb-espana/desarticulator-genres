@@ -1,0 +1,17 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2026-09-29 12:48:25
+Genre: jazz_blues
+Description: Classic jazz blues - Art Blakey, jazz club shuffle: swing ride, feathered kick, ghost notes, and soft brushed dynamics
+Tempo: 92 BPM
+Seed: 42
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 150
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_150bars.mid

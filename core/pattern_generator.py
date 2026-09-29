@@ -104,6 +104,12 @@ class PatternGenerator:
             self.patterns['delta_blues'] = DeltaBluesPattern
         except ImportError:
             pass
+
+        try:
+            from genres.blues.jazz_blues import JazzBluesPattern
+            self.patterns['jazz_blues'] = JazzBluesPattern
+        except ImportError:
+            pass
         
         # Complete remaining Uruguayan genres
         try:
@@ -215,8 +221,13 @@ class PatternGenerator:
             self.patterns['dub'] = DubPattern
         except ImportError:
             pass
-        
-        # TODO: Add remaining 80 patterns as they're implemented
+        try:
+            from genres.dub_reggae.dub_reggae import DubReggaePattern
+            self.patterns['dub_reggae'] = DubReggaePattern
+        except ImportError:
+            pass
+
+        # TODO: Add remaining 65 patterns as they're implemented
     
     def get_available_genres(self) -> Dict[str, str]:
         """Get dictionary of available genres and their display names."""

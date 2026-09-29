@@ -1,0 +1,17 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2026-09-09 08:20:39
+Genre: dub_reggae
+Description: Rocksteady-swung one drop fused with dub space and drops, inspired by Prince Buster's shuffle and the dub production of Scientist, Prince Far I, and Augustus Pablo
+Tempo: 90 BPM
+Seed: 42
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 32
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_32bars.mid
