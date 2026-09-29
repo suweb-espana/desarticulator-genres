@@ -1,0 +1,27 @@
+---
+description: Code-review must orient via graphify before dumping diffs — pull on /code-review or formal review
+alwaysApply: false
+---
+
+# Code-review + graphify
+
+## When
+
+`code-review` / `review` / `/code-review`, or review of branch / PR / uncommitted / “review since X”.
+
+## Rules
+
+1. List touched files/symbols (`git diff --name-only` / status).
+2. Graphify first: `query` / `path` / `explain` on those symbols — pass **subgraph** to Standards/Spec subagents (not whole tree / full `GRAPH_REPORT.md`).
+3. Put the graphify obligation in every review subagent prompt.
+4. Prefer boundary findings (cross-imports, unexpected paths, untouched neighbors).
+5. Missing `graph.json`: say so; continue with diff. Stale graph: note it; rebuild only if needed and not Ask mode.
+6. Diff remains source of what changed; graphify orients.
+
+## Done
+
+Report which graphify queries/paths ran; subagents got scoped graph context.
+
+## Pitfalls
+
+Standards/Spec without graphify; pasting full `GRAPH_REPORT.md`; skipping `path` on cross-domain coupling.

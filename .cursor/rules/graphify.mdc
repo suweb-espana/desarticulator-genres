@@ -1,0 +1,13 @@
+---
+description: Desarticulator graphify deltas — single-repo AST update
+alwaysApply: true
+---
+
+# graphify (Desarticulator)
+
+Canonical explore rule: global `graphify.mdc`.
+
+Desarticulator-only:
+
+- After code changes, prefer `graphify update .` (AST-only). No nested product merge script (unlike Tervia’s `./scripts/graphify-rebuild.sh`).
+- Dirty `graphify-out/` is expected; skip graphify only if the task is about a stale/wrong graph or the user says so.
