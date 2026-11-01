@@ -176,6 +176,10 @@ def create_all_patterns_in_one_function():  # Anti-pattern
 
 ## Development Workflow
 
+### Replacement and Cleanup Rule
+- When modifying or replacing an existing file or generated output, delete the previous version that is being replaced after the new version is verified.
+- Keep only the current version unless the user explicitly asks to preserve historical or backup copies.
+
 ### Genre Implementation Workflow
 - **Step 1**: Create genre module in appropriate `genres/[category]/[genre_name].py`
 - **Step 2**: Implement all required methods (5 variations + 5 song sections)

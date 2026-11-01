@@ -2,16 +2,18 @@
 
 ## 📊 **Progress: 35/100 Genres Implemented**
 
-### ✅ **IMPLEMENTED (34/100):**
+### ✅ **IMPLEMENTED (35/100):**
 
 #### **Argentinian Music (3/30):**
 - ✅ `rock_nacional` - Sumo, Los Redonditos de Ricota, Big Manifesto
 - ✅ `blues_argentino` - Pappo's Blues, Pappo Napolitano
 - ✅ `post_punk_argentino` - Sumo, Soda Stereo
 
-#### **Experimental/Progressive (2/10):**
+#### **Experimental/Progressive (4/10):**
 - ✅ `prog_rock` - Frank Zappa, King Crimson
 - ✅ `jazz_fusion` - Vinnie Colaiuta on Joe's Garage: Central Scrutinizer verse, Catholic Girls chorus, mapped for Le Cars
+- ✅ `psychedelic_rock` - Hendrix, Cream, Pink Floyd-inspired hypnotic rock patterns
+- ✅ `jazz_blues_rock` - 97 BPM fusion: swung jazz ride, blues drag, restrained rock weight, phrase fills
 
 #### **Madchester/Britpop (1/10):**
 - ✅ `madchester` - Happy Mondays, Stone Roses
@@ -55,7 +57,7 @@
 
 ## 🔄 **TO BE IMPLEMENTED (65/100):**
 
-### **Experimental/Progressive (8 remaining):**
+### **Experimental/Progressive (6 remaining):**
 - [ ] `avant_prog` - Zappa, Captain Beefheart
 - [ ] `experimental_rock` - Zappa, Beefheart
 - [ ] `art_rock` - Zappa, Roxy Music
@@ -155,7 +157,7 @@
 ## 📈 **Implementation Priority:**
 1. **Current**: Complete remaining Uruguayan genres (6 left)
 2. **Next**: Complete Argentinian genres (27 left)
-3. **Then**: Experimental/Progressive (8 left)
+3. **Then**: Experimental/Progressive (6 left)
 4. **Then**: Dub/Reggae/Ska (10 left)
 5. **Then**: Blues/Roots variations (10 left)
 6. **Then**: David Bowie/Glam (10 left)
@@ -170,6 +172,8 @@
 - 🔄 Need to implement remaining 65 genres
 
 ## 🎵 **Recent Implementations:**
+- **2026-11-01**: Added Jazz Blues Rock — 97 BPM fusion with swung jazz ride, blues drag, restrained rock weight, and phrase fills
+- **2026-10-25**: Added Psychedelic Rock — hypnotic ostinatos, spacious backbeats, displaced accents, tom motifs, and expanding crash phrases
 - **2026-09-29**: Added Jazz Blues — Art Blakey jazz club blues with swing ride, feathered kick, ghost notes, and sidestick bridge
 - **2026-08-28**: Added Jazz Fusion — Vinnie Colaiuta on Joe's Garage; Central Scrutinizer verse, Catholic Girls chorus, Closed Accent on 3, Le Cars tom map 48/47/43/41
 - **2025-01-26**: Added Dub genre with minimal, spaced-out rhythms, one drop emphasis, and hypnotic repetition inspired by King Tubby and Lee Perry
@@ -188,7 +192,7 @@
 - **Blues**: 40% complete (4/10) - Pappo-style + Jazz Blues
 - **Spanish**: 100% complete (10/10) - FASE 1 COMPLETADA ✅
 - **Argentinian**: 10% complete (3/30) 
-- **Experimental**: 20% complete (2/10)
+- **Experimental**: 40% complete (4/10)
 - **Madchester**: 10% complete (1/10)
 - **Country**: 0% complete (0/10)
 - **Dub/Reggae**: 30% complete (3/10) - Reggae, Dub, and Dub Reggae implemented

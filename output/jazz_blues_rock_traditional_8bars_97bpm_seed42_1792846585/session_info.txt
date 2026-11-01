@@ -1,0 +1,17 @@
+# Desarticulator Generation Session
+========================================
+
+Generated: 2026-10-24 14:56:25
+Genre: jazz_blues_rock
+Description: 97 BPM fusion performance for Am6 -> B diminished -> E7: breathing ride, blues drag, restrained rock weight, and phrase fills.
+Tempo: 97 BPM
+Seed: 42
+
+Section Information:
+--------------------
+Pattern: Traditional
+Bars: 8
+Type: Full Pattern with Variations
+Generated Files:
+---------------
+- fracaso_inminente_traditional_pattern_8bars.mid

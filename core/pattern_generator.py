@@ -48,6 +48,18 @@ class PatternGenerator:
             self.patterns['jazz_fusion'] = JazzFusionPattern
         except ImportError:
             pass
+
+        try:
+            from genres.experimental.jazz_blues_rock import JazzBluesRockPattern
+            self.patterns['jazz_blues_rock'] = JazzBluesRockPattern
+        except ImportError:
+            pass
+
+        try:
+            from genres.experimental.psychedelic_rock import PsychedelicRockPattern
+            self.patterns['psychedelic_rock'] = PsychedelicRockPattern
+        except ImportError:
+            pass
         
         try:
             from genres.madchester.madchester import MadchesterPattern
